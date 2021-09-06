@@ -9,6 +9,15 @@
 }
 
 .ant-menu-item {
+
+  &:hover {
+    color: #0062FF !important;
+  }
+
+  &:active {
+    background-color: #0062ff0d !important;
+  }
+
   &::after {
     border-left: 3px solid #0062FF !important;
     border-right: none !important;
