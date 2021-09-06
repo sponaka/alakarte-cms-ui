@@ -1,9 +1,11 @@
 import React from "react";
 import {Layout, Menu} from "antd";
 import "./Sidebar.scss"
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
-const SideBar = ({menu}) => {
+const SideBar = () => {
+    const location = useLocation();
+
     return (
         <Layout.Sider
             className="sidebar"
@@ -12,25 +14,24 @@ const SideBar = ({menu}) => {
             collapsedWidth={0}
             trigger={null}
         >
-            {/*{menu}*/}
-            <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline" className='menu-items'>
-                <Menu.Item key="1">
+            <Menu theme="light" defaultSelectedKeys={[location.pathname]} mode="inline" className='menu-items'>
+                <Menu.Item key="/">
                     <span>Home</span>
                     <Link to="/" />
                 </Menu.Item>
-                <Menu.Item key="2">
+                <Menu.Item key="/order">
                     <span>Order</span>
                     <Link to="/order" />
                 </Menu.Item>
-                <Menu.Item key="3">
+                <Menu.Item key="/customer">
                     <span>Customer</span>
                     <Link to="/customer" />
                 </Menu.Item>
-                <Menu.Item key="4">
+                <Menu.Item key="/customer-feedback">
                     <span>Customer Feedback</span>
                     <Link to="/customer-feedback" />
                 </Menu.Item>
-                <Menu.Item key="5">
+                <Menu.Item key="/product">
                     <span>Product</span>
                     <Link to="/product" />
                 </Menu.Item>
