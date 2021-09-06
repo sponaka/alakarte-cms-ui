@@ -1,11 +1,18 @@
 import React, { useState } from "react";
-import { Layout } from "antd";
+import {Layout} from "antd";
 import TopicMenu from "./components/feature-menu/TopicMenu";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import "./App.scss";
 import NavBar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/Sidebar";
 
+function Home() {
+    return <div>Home</div>;
+}
+function Order() {
+    return <div>Order</div>;
+}
 
 function App() {
     const topics = ["Order", "Customer", "Customer Feedback", "Product"];
@@ -25,13 +32,16 @@ function App() {
     );
     return (
         <div className="App">
-            <NavBar menu={Menu} />
-            <Layout>
-                <SideBar menu={Menu} />
-                <Layout.Content className="content">
-                    {topics[contentIndex]}
-                </Layout.Content>
-            </Layout>
+            <Router>
+                <NavBar menu={Menu} />
+                <Layout>
+                    <SideBar menu={Menu} />
+                    <Layout.Content className="content" style={{background: '#F4F7FC 0% 0% no-repeat padding-box'}}>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/order" component={Order} />
+                    </Layout.Content>
+                </Layout>
+            </Router>
         </div>
     );
 }

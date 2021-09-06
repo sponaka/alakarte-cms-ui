@@ -1,4 +1,9 @@
 .sidebar {
-  height: 1000px;
-  margin-right: 24px;
+  height: 100vh;
+
+  .menu-items {
+    font-family: Poppins-Medium, sans-serif;
+    letter-spacing: 0.1px;
+    color: #171725;
+  }
 }

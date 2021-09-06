@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Avatar, Badge, Drawer} from "antd";
+import {Avatar, Badge, Drawer, Menu} from "antd";
 import {BellOutlined, MenuOutlined} from "@ant-design/icons";
 import "./Navbar.scss";
 import logo from "./../../logo.svg";
+import {Link} from "react-router-dom";
 
 const NavBar = ({menu}) => {
     const [visible, setVisible] = useState(false);
@@ -17,7 +18,29 @@ const NavBar = ({menu}) => {
                 onClose={() => setVisible(false)}
                 visible={visible}
             >
-                {menu}
+                {/*{menu}*/}
+                <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline" className='menu-items'>
+                    <Menu.Item key="1">
+                        <span>Home</span>
+                        <Link to="/" />
+                    </Menu.Item>
+                    <Menu.Item key="2">
+                        <span>Order</span>
+                        <Link to="/order" />
+                    </Menu.Item>
+                    <Menu.Item key="3">
+                        <span>Customer</span>
+                        <Link to="/customer" />
+                    </Menu.Item>
+                    <Menu.Item key="4">
+                        <span>Customer Feedback</span>
+                        <Link to="/customer-feedback" />
+                    </Menu.Item>
+                    <Menu.Item key="5">
+                        <span>Product</span>
+                        <Link to="/product" />
+                    </Menu.Item>
+                </Menu>
             </Drawer>
             <a href="/">
                 <img src={logo} className="logo" alt="logo"/>
