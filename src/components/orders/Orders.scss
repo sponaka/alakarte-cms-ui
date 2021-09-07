@@ -1,0 +1,26 @@
+.orders-list {
+  padding: 20px;
+
+  .page-title {
+    letter-spacing: 0.1px;
+    color: #171725;
+    font-family: Poppins-SemiBold, sans-serif;
+    margin-top: 5px;
+  }
+
+  .orders-table {
+    margin-top: 25px;
+  }
+
+  .ant-table-thead > tr > th {
+    background-color: white !important;
+  }
+
+  .ant-table-thead {
+    tr {
+      text-transform: uppercase;
+      color: #131523;
+      font-family: Poppins-SemiBold, sans-serif;
+    }
+  }
+}

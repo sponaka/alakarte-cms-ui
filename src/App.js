@@ -5,12 +5,10 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import "./App.scss";
 import NavBar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/Sidebar";
+import Orders from "./components/orders/Orders";
 
 function Home() {
     return <div>Home</div>;
-}
-function Order() {
-    return <div>Order</div>;
 }
 
 function App() {
@@ -22,7 +20,7 @@ function App() {
                     <SideBar />
                     <Layout.Content className="content" style={{background: '#F4F7FC 0% 0% no-repeat padding-box'}}>
                         <Route exact path="/" component={Home} />
-                        <Route path="/order" component={Order} />
+                        <Route path="/order" component={Orders} />
                     </Layout.Content>
                 </Layout>
             </Router>
