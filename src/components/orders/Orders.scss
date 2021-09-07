@@ -10,6 +10,20 @@
 
   .orders-table {
     margin-top: 25px;
+
+    table {
+      background-color: #0062ff0d !important;
+      border-collapse: separate !important;
+      border-spacing: 0 10px !important;
+
+      th:before {
+        content: none !important;
+      }
+
+      tr {
+        background-color: white;
+      }
+    }
   }
 
   .ant-table-thead > tr > th {
