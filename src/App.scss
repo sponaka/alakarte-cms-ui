@@ -24,3 +24,11 @@
     left: 0 !important;
   }
 }
+
+.ant-select-item-option, .ant-picker-dropdown {
+  font-size: 12px !important;
+}
+
+.ant-select-item-option-selected {
+  background-color: #0062ff0d !important;
+}

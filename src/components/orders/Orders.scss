@@ -45,6 +45,10 @@
     background-color: white !important;
   }
 
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    padding: 10px 15px;
+  }
+
   .ant-table-thead {
     tr {
       text-transform: uppercase;

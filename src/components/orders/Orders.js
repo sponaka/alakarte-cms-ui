@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './Orders.scss';
 import {DatePicker, Select, Space, Table} from "antd";
 import Icon from "@ant-design/icons";
@@ -54,7 +54,7 @@ const Orders = () => {
             ),
         },
     ];
-    const data = [
+    const tableData = [
         {
             key: '1',
             orderStatus: 'Completed',
@@ -63,7 +63,6 @@ const Orders = () => {
             item: 'Frozen Chicken Wholewing',
             quantity: 20,
             attachment: true,
-            tags: ['nice', 'developer'],
         },
         {
             key: '2',
@@ -73,20 +72,56 @@ const Orders = () => {
             quantity: 5,
             attachment: true,
             customerName: 'Dileep Kumar Jami',
-            tags: ['loser'],
         },
         {
             key: '3',
-            orderStatus: 'In progress',
+            orderStatus: 'New Order',
             orderNumber: 3,
             item: 'Tiptop Chicken Whole Neck',
             quantity: 10,
-            customerName: 'John Brown',
+            customerName: 'Shrey Baheti',
             attachment: false,
-            tags: ['cool', 'teacher'],
+        },
+        {
+            key: '4',
+            orderStatus: 'Order Confirmed',
+            orderNumber: 4,
+            item: 'Frozen Chicken Wholewing',
+            quantity: 20,
+            customerName: 'John Wick',
+            attachment: false,
+        },
+        {
+            key: '5',
+            orderStatus: 'Image Uploaded',
+            orderNumber: 5,
+            item: 'Tiptop Chicken Whole Neck',
+            quantity: 15,
+            customerName: 'John Wick',
+            attachment: true,
+        },
+        {
+            key: '6',
+            orderStatus: 'Completed',
+            orderNumber: 6,
+            customerName: 'Jon Taylor',
+            item: 'Frozen Chicken Wholewing',
+            quantity: 25,
+            attachment: false,
         },
     ];
     const { Option } = Select;
+
+    const [ordersData, setOrdersData] = useState(tableData);
+
+    const [orderStatuses, setOrderStatuses] = useState(['New Order', 'Image Uploaded', 'Order Confirmed', 'Delivered', 'Completed', 'Issue']);
+
+    const [customers, setCustomers] = useState([...new Set(tableData.map(order => order.customerName))]);
+
+    const orderNumbers = tableData.map(order => order.orderNumber);
+
+    const [orderStatusFilter, setOrderStatusFilter] = useState();
+    const [customerNameFilter, setCustomerNameFilter] = useState();
 
     return (
         <div className='orders-list'>
@@ -95,10 +130,29 @@ const Orders = () => {
                 <div className='order-status'>
                     <div className='filter-name'>SEARCH BY ORDER STATUS</div>
                     <Select
-                        showSearch
+                        allowClear
                         style={{width: 200}}
-                        placeholder="Search to Select"
+                        placeholder="Select"
                         optionFilterProp="children"
+                        value={orderStatusFilter}
+                        onChange={(status) => {
+                            setOrderStatusFilter(status);
+                            console.log('changed', status);
+                            if (status !== undefined) {
+                                const filteredData = ordersData.filter(order => order.orderStatus.includes(status))
+                                setOrdersData(filteredData);
+                                const filteredCustomers = filteredData.map(order => order.customerName);
+                                setCustomers(filteredCustomers);
+
+                            } else {
+                                let filteredData = tableData;
+                                if (customerNameFilter !== undefined) {
+                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter))
+                                }
+                                setOrdersData(filteredData);
+                                setCustomers([...new Set(tableData.map(order => order.customerName))]);
+                            }
+                        }}
                         filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
@@ -106,13 +160,7 @@ const Orders = () => {
                             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                     >
-                        <Option value="1">All</Option>
-                        <Option value="2">New order</Option>
-                        <Option value="3">Image uploaded</Option>
-                        <Option value="4">Order Confirmed</Option>
-                        <Option value="5">Delivered</Option>
-                        <Option value="6">Completed</Option>
-                        <Option value="7">Issue</Option>
+                        {orderStatuses.map(status =>  <Option value={status}>{status}</Option>)}
                     </Select>
                 </div>
                 <div className='order-date'>
@@ -123,9 +171,30 @@ const Orders = () => {
                     <div className='filter-name'>SEARCH BY CUSTOMER</div>
                     <Select
                         showSearch
+                        allowClear
                         style={{width: 200}}
-                        placeholder="Search to Select"
+                        placeholder="Search"
                         optionFilterProp="children"
+                        value={customerNameFilter}
+                        onChange={(customerName) => {
+                            setCustomerNameFilter(customerName);
+                            if (customerName !== undefined) {
+                                let filteredData = ordersData.filter(order => order.customerName.includes(customerName))
+                                console.log('orderStatusFilter', orderStatusFilter);
+
+                                setOrdersData(filteredData);
+                                // const filteredCustomers = filteredData.map(order => order.customerName);
+                                // setCustomers(filteredCustomers);
+
+                            } else {
+                                let filteredData = tableData;
+                                if (orderStatusFilter !== undefined) {
+                                    filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
+                                }
+                                setOrdersData(filteredData);
+                                // setCustomers([...new Set(tableData.map(order => order.customerName))]);
+                            }
+                        }}
                         filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                         }
@@ -133,17 +202,18 @@ const Orders = () => {
                             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                     >
-                        <Option value="1">John Doe</Option>
-                        <Option value="2">Dileep Kumar Jami</Option>
-                        <Option value="3">Jon Brown</Option>
+                        {customers.map(customerName =>  <Option value={customerName}>{customerName}</Option>)}
+
                     </Select>
                 </div>
                 <div className='order-number'>
                     <div className='filter-name'>SEARCH BY ORDER NUMBER</div>
                     <Select
                         showSearch
+                        allowClear
                         style={{width: 200}}
-                        placeholder="Search to Select"
+                        placeholder="Search"
+                        onChange={(event) => console.log(event)}
                         optionFilterProp="children"
                         filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -152,18 +222,12 @@ const Orders = () => {
                             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                     >
-                        <Option value="1">All</Option>
-                        <Option value="2">New order</Option>
-                        <Option value="3">Image uploaded</Option>
-                        <Option value="4">Order Confirmed</Option>
-                        <Option value="5">Delivered</Option>
-                        <Option value="6">Completed</Option>
-                        <Option value="7">Issue</Option>
+                        {orderNumbers.map(orderNumber =>  <Option value={orderNumber}>{orderNumber}</Option>)}
                     </Select>
                 </div>
             </div>
             <div className='orders-table'>
-                <Table columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={ordersData} />
             </div>
         </div>
     )
