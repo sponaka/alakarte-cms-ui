@@ -114,6 +114,7 @@ const Orders = () => {
 
     const [ordersData, setOrdersData] = useState(tableData);
 
+    // eslint-disable-next-line
     const [orderStatuses, setOrderStatuses] = useState(['New Order', 'Image Uploaded', 'Order Confirmed', 'Delivered', 'Completed', 'Issue']);
 
     const [customers, setCustomers] = useState([...new Set(tableData.map(order => order.customerName))]);
