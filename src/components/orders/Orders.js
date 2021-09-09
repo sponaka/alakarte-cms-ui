@@ -228,7 +228,7 @@ const Orders = () => {
                 </div>
             </div>
             <div className='orders-table'>
-                <Table columns={columns} dataSource={ordersData} locale={{ emptyText: 'No orders found' }}/>
+                <Table columns={columns} dataSource={ordersData} locale={{ emptyText: 'No orders found' }} pagination={{ pageSize: 3 }} />
             </div>
         </div>
     )
