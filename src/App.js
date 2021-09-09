@@ -7,6 +7,7 @@ import NavBar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/Sidebar";
 import Orders from "./components/orders/Orders";
 import Customers from "./components/customers/Customers";
+import CustomerDetails from "./components/customers/customer-details/CustomerDetails";
 
 function Home() {
     return <div>Home</div>;
@@ -23,6 +24,7 @@ function App() {
                         <Route exact path="/" component={Home} />
                         <Route path="/orders" component={Orders} />
                         <Route path="/customers" component={Customers} />
+                        <Route path="/customer/:id" component={CustomerDetails} />
                     </Layout.Content>
                 </Layout>
             </Router>
