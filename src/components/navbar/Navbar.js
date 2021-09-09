@@ -24,13 +24,13 @@ const NavBar = () => {
                         <span>Home</span>
                         <Link to="/" />
                     </Menu.Item>
-                    <Menu.Item key="/order">
-                        <span>Order</span>
-                        <Link to="/order" />
+                    <Menu.Item key="/orders">
+                        <span>Orders</span>
+                        <Link to="/orders" />
                     </Menu.Item>
-                    <Menu.Item key="/customer">
-                        <span>Customer</span>
-                        <Link to="/customer" />
+                    <Menu.Item key="/customers">
+                        <span>Customers</span>
+                        <Link to="/customers" />
                     </Menu.Item>
                     <Menu.Item key="/customer-feedback">
                         <span>Customer Feedback</span>

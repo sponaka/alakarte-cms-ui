@@ -6,6 +6,7 @@ import "./App.scss";
 import NavBar from "./components/navbar/Navbar";
 import SideBar from "./components/sidebar/Sidebar";
 import Orders from "./components/orders/Orders";
+import Customers from "./components/customers/Customers";
 
 function Home() {
     return <div>Home</div>;
@@ -20,7 +21,8 @@ function App() {
                     <SideBar />
                     <Layout.Content className="content" style={{background: '#F4F7FC 0% 0% no-repeat padding-box'}}>
                         <Route exact path="/" component={Home} />
-                        <Route path="/order" component={Orders} />
+                        <Route path="/orders" component={Orders} />
+                        <Route path="/customers" component={Customers} />
                     </Layout.Content>
                 </Layout>
             </Router>
