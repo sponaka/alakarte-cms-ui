@@ -1,8 +1,12 @@
 import React, {useState} from "react";
 import './Orders.scss';
-import {DatePicker, Select, Space, Table} from "antd";
+import {Button, DatePicker, Select, Space, Table} from "antd";
 import Icon from "@ant-design/icons";
+import ReactExport from "react-export-excel";
 
+const {ExcelFile} = ReactExport;
+const {ExcelSheet} = ExcelFile;
+const {ExcelColumn} = ExcelFile.ExcelColumn;
 const Orders = () => {
 
     const AttachmentIcon = () => {
@@ -124,6 +128,17 @@ const Orders = () => {
     const [orderStatusFilter, setOrderStatusFilter] = useState();
     const [customerNameFilter, setCustomerNameFilter] = useState();
 
+    const DownloadExcel = () => {
+        return <ExcelFile element={<Button style={{color: 'black', border: '1px solid #707070', fontFamily: 'Poppins-SemiBold'
+        }}>DOWNLOAD</Button>} filename='AlakarteOrders'>
+            <ExcelSheet data={ordersData} name="Orders">
+                <ExcelColumn label="Order Status" value="orderStatus"/>
+                <ExcelColumn label="Order Number" value="orderNumber"/>
+                <ExcelColumn label="Customer Name" value="customerName"/>
+                <ExcelColumn label="Product name" value="item"/>
+            </ExcelSheet>
+        </ExcelFile>
+    }
     return (
         <div className='orders-list'>
             <h1 className='page-title'>Order list</h1>
@@ -225,6 +240,9 @@ const Orders = () => {
                     >
                         {orderNumbers.map(orderNumber =>  <Option value={orderNumber}>{orderNumber}</Option>)}
                     </Select>
+                </div>
+                <div className='download-excel'>
+                    <DownloadExcel />
                 </div>
             </div>
             <div className='orders-table'>
