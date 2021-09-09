@@ -1,0 +1,26 @@
+.customer-detail-page {
+  padding: 20px;
+
+  .page-title {
+    letter-spacing: 0.1px;
+    color: #171725;
+    font-family: Poppins-SemiBold, sans-serif;
+    margin-top: 5px;
+  }
+
+  .customer-info {
+    margin-top: 25px;
+
+    .ant-row {
+      padding: 12px;
+    }
+
+    .bg-white {
+      background-color: white;
+    }
+
+    .customer-info-label {
+      font-family: Poppins-Medium, sans-serif;
+    }
+  }
+}
