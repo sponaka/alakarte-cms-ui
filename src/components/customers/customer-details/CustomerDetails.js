@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './CustomerDetails.scss';
-import { Row, Col } from 'antd';
+import {Row, Col, Button, Spin} from 'antd';
 import apiClient from "../../../api/api";
 
 const CustomerDetails = ({match}) => {
@@ -32,12 +32,20 @@ const CustomerDetails = ({match}) => {
     }, [customerId]);
 
     if (fetchingCustomerInfo || customerInfo == null) {
-        return <div>Fetching</div>
+        return <div className='fetching'><Spin size="large" /></div>
     }
 
     return (
         <div className='customer-detail-page'>
             <h1 className='page-title'>Customer</h1>
+            <div className='download-actions'>
+                <Button className='action'>
+                    VIEW ORDER HISTORY
+                </Button>
+                <Button className='action'>
+                    DOWNLOAD
+                </Button>
+            </div>
             <div className='customer-info'>
                 <Row className='bg-white'>
                     <Col flex="300px" className='customer-info-label'>Restaurant Name</Col>
@@ -69,7 +77,7 @@ const CustomerDetails = ({match}) => {
                 </Row>
             </div>
         </div>
-    )
+    );
 }
 
 export default CustomerDetails;

@@ -1,3 +1,9 @@
+.fetching {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
 .customer-detail-page {
   padding: 20px;
 
@@ -6,6 +12,18 @@
     color: #171725;
     font-family: Poppins-SemiBold, sans-serif;
     margin-top: 5px;
+  }
+
+  .download-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+
+    .action {
+      color: black;
+      border: 1px solid #707070;
+      font-family: Poppins-SemiBold, sans-serif;
+    }
   }
 
   .customer-info {
