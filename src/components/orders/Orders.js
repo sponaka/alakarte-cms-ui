@@ -3,10 +3,13 @@ import './Orders.scss';
 import {Button, DatePicker, Select, Space, Table} from "antd";
 import Icon from "@ant-design/icons";
 import ReactExport from "react-export-excel";
+import Constants from "../../constants";
 
 const {ExcelFile} = ReactExport;
 const {ExcelSheet} = ExcelFile;
 const {ExcelColumn} = ExcelFile.ExcelColumn;
+const { RangePicker } = DatePicker;
+
 const Orders = () => {
 
     const AttachmentIcon = () => {
@@ -130,7 +133,7 @@ const Orders = () => {
 
     const DownloadExcel = () => {
         return <ExcelFile element={<Button style={{color: 'black', border: '1px solid #707070', fontFamily: 'Poppins-SemiBold'
-        }}>DOWNLOAD</Button>} filename='AlakarteOrders'>
+        }}>DOWNLOAD</Button>} filename={Constants.fileName}>
             <ExcelSheet data={ordersData} name="Orders">
                 <ExcelColumn label="Order Status" value="orderStatus"/>
                 <ExcelColumn label="Order Number" value="orderNumber"/>
@@ -179,9 +182,24 @@ const Orders = () => {
                         {orderStatuses.map(status =>  <Option value={status}>{status}</Option>)}
                     </Select>
                 </div>
-                <div className='order-date'>
-                    <div className='filter-name'>SEARCH BY DATE</div>
-                    <DatePicker style={{width: 200}}/>
+                <div className='order-number'>
+                    <div className='filter-name'>SEARCH BY ORDER NUMBER</div>
+                    <Select
+                        showSearch
+                        allowClear
+                        style={{width: 200}}
+                        placeholder="Search"
+                        onChange={(event) => console.log(event)}
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                        filterSort={(optionA, optionB) =>
+                            optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
+                        }
+                    >
+                        {orderNumbers.map(orderNumber =>  <Option value={orderNumber}>{orderNumber}</Option>)}
+                    </Select>
                 </div>
                 <div className='order-customer'>
                     <div className='filter-name'>SEARCH BY CUSTOMER</div>
@@ -222,24 +240,9 @@ const Orders = () => {
 
                     </Select>
                 </div>
-                <div className='order-number'>
-                    <div className='filter-name'>SEARCH BY ORDER NUMBER</div>
-                    <Select
-                        showSearch
-                        allowClear
-                        style={{width: 200}}
-                        placeholder="Search"
-                        onChange={(event) => console.log(event)}
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                        filterSort={(optionA, optionB) =>
-                            optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                        }
-                    >
-                        {orderNumbers.map(orderNumber =>  <Option value={orderNumber}>{orderNumber}</Option>)}
-                    </Select>
+                <div className='order-date-range'>
+                    <div className='filter-name'>SEARCH BY ORDER DATE RANGE</div>
+                    <RangePicker style={{width: 250}}/>
                 </div>
                 <div className='download-excel'>
                     <DownloadExcel />
