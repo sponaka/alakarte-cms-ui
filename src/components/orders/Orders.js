@@ -242,7 +242,7 @@ const Orders = () => {
                 </div>
                 <div className='order-date-range'>
                     <div className='filter-name'>SEARCH BY ORDER DATE RANGE</div>
-                    <RangePicker style={{width: 250}}/>
+                    <RangePicker style={{width: 250}} placeholder={['From', 'To']} />
                 </div>
                 <div className='download-excel'>
                     <DownloadExcel />
