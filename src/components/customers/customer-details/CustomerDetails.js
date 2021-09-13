@@ -1,8 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './CustomerDetails.scss';
 import { Row, Col } from 'antd';
+import apiClient from "../../../api/api";
 
 const CustomerDetails = ({match}) => {
+
+    const customerId = match.params.id;
+    const [customerInfo, setCustomerInfo] = useState(null);
+
+    useEffect(() => {
+        apiClient.get(`customer/${customerId}`).then(res => {
+            console.log('res', res);
+        }).catch((error) => {
+            console.error(error);
+        })
+    });
+
     return (
         <div className='customer-detail-page'>
             <h1 className='page-title'>Customer</h1>
