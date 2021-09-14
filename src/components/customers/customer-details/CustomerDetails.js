@@ -5,10 +5,11 @@ import apiClient from "../../../api/api";
 import Constants from "../../../constants";
 import ReactExport from "react-export-excel";
 import {FileExcelOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
 const {ExcelFile} = ReactExport;
 const {ExcelSheet} = ExcelFile;
-const {ExcelColumn} = ExcelFile.ExcelColumn;
+const ExcelColumn = ExcelFile.ExcelColumn;
 const CustomerDetails = ({match}) => {
 
     const customerId = match.params.id;
@@ -28,7 +29,7 @@ const CustomerDetails = ({match}) => {
                 "description": "Sky Deck View Bar is a stylish lounge and restaurant on the rooftop of The Bayleaf Intramuros.",
                 "tax_id": "12345",
                 "phone_number": "8136889404",
-                "contact_name": "Dileep",
+                "contact_name": "Dileep Kumar Jami",
                 "contact_email": "jami@horizons.ventures",
                 "contact_phone_number": "8136889404",
                 "active": true
@@ -41,35 +42,48 @@ const CustomerDetails = ({match}) => {
         return <div className='fetching'><Spin size="large" /></div>
     }
 
+    const menu = () => (<Menu style={{fontFamily: 'Poppins-Medium'}}>
+        <Menu.Item icon={<FileExcelOutlined />} key='1'>
+            <ExcelFile element={<span>Download for finance</span>} filename={Constants.customerInfoFileName}>
+                <ExcelSheet data={[customerInfo]} name="Orders">
+                    <ExcelColumn label="Order Status" value="phone_number"/>
+                    <ExcelColumn label="Order Number" value="contact_name"/>
+                    <ExcelColumn label="Customer Name" value="name"/>
+                    <ExcelColumn label="Product name" value="contact_phone_number"/>
+                </ExcelSheet>
+            </ExcelFile>
+        </Menu.Item>
+        <Menu.Item icon={<FileExcelOutlined />} key='2'>
+            <ExcelFile element={<span>Download for havi</span>} filename={Constants.customerInfoFileName}>
+                <ExcelSheet data={[customerInfo]} name="Orders">
+                    <ExcelColumn label="Order Status" value="phone_number"/>
+                    <ExcelColumn label="Order Number" value="contact_name"/>
+                    <ExcelColumn label="Customer Name" value="name"/>
+                    <ExcelColumn label="Product name" value="contact_phone_number"/>
+                </ExcelSheet>
+            </ExcelFile>
+        </Menu.Item>
+    </Menu>);
+
     return (
         <div className='customer-detail-page'>
             <h1 className='page-title'>Customer</h1>
             <div className='download-actions'>
-                <Button className='action'>
-                    VIEW ORDER HISTORY
-                </Button>
-                <Dropdown overlay={<Menu style={{fontFamily: 'Poppins-Medium'}}>
-                    <Menu.Item icon={<FileExcelOutlined />}>
-                        <ExcelFile element={<span>Download for finance</span>} filename={Constants.customerInfoFileName}>
-                            <ExcelSheet data={[customerInfo]} name="Orders">
-                                <ExcelColumn label="Order Status" value="phone_number"/>
-                                <ExcelColumn label="Order Number" value="contact_name"/>
-                                <ExcelColumn label="Customer Name" value="name"/>
-                                <ExcelColumn label="Product name" value="contact_phone_number"/>
-                            </ExcelSheet>
-                        </ExcelFile>
-                    </Menu.Item>
-                    <Menu.Item icon={<FileExcelOutlined />}>
-                        <ExcelFile element={<span>Download for havi</span>} filename={Constants.customerInfoFileName}>
-                            <ExcelSheet data={[customerInfo]} name="Orders">
-                                <ExcelColumn label="Order Status" value="phone_number"/>
-                                <ExcelColumn label="Order Number" value="contact_name"/>
-                                <ExcelColumn label="Customer Name" value="name"/>
-                                <ExcelColumn label="Product name" value="contact_phone_number"/>
-                            </ExcelSheet>
-                        </ExcelFile>
-                    </Menu.Item>
-                </Menu>}>
+                <Link
+                    to={{
+                        pathname: `/orders`,
+                        props: {
+                            customerFilterSearch: customerInfo.contact_name
+                        }
+                    }}
+
+                >
+                    <Button className='action'>
+                        VIEW ORDER HISTORY
+                    </Button>
+                </Link>
+
+                <Dropdown overlay={menu}>
                     <Button className='action'>
                         DOWNLOAD
                     </Button>
