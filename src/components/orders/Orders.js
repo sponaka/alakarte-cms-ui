@@ -133,7 +133,7 @@ const Orders = () => {
 
     const DownloadExcel = () => {
         return <ExcelFile element={<Button style={{color: 'black', border: '1px solid #707070', fontFamily: 'Poppins-SemiBold'
-        }}>DOWNLOAD</Button>} filename={Constants.fileName}>
+        }}>DOWNLOAD</Button>} filename={Constants.ordersFileName}>
             <ExcelSheet data={ordersData} name="Orders">
                 <ExcelColumn label="Order Status" value="orderStatus"/>
                 <ExcelColumn label="Order Number" value="orderNumber"/>

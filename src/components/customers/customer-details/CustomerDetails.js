@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import './CustomerDetails.scss';
-import {Row, Col, Button, Spin} from 'antd';
+import {Row, Col, Button, Spin, Dropdown, Menu} from 'antd';
 import apiClient from "../../../api/api";
+import Constants from "../../../constants";
+import ReactExport from "react-export-excel";
+import {FileExcelOutlined} from "@ant-design/icons";
 
+const {ExcelFile} = ReactExport;
+const {ExcelSheet} = ExcelFile;
+const {ExcelColumn} = ExcelFile.ExcelColumn;
 const CustomerDetails = ({match}) => {
 
     const customerId = match.params.id;
@@ -31,7 +37,7 @@ const CustomerDetails = ({match}) => {
         });
     }, [customerId]);
 
-    if (fetchingCustomerInfo || customerInfo == null) {
+    if (fetchingCustomerInfo || !customerInfo) {
         return <div className='fetching'><Spin size="large" /></div>
     }
 
@@ -42,9 +48,32 @@ const CustomerDetails = ({match}) => {
                 <Button className='action'>
                     VIEW ORDER HISTORY
                 </Button>
-                <Button className='action'>
-                    DOWNLOAD
-                </Button>
+                <Dropdown overlay={<Menu style={{fontFamily: 'Poppins-Medium'}}>
+                    <Menu.Item icon={<FileExcelOutlined />}>
+                        <ExcelFile element={<span>Download for finance</span>} filename={Constants.customerInfoFileName}>
+                            <ExcelSheet data={[customerInfo]} name="Orders">
+                                <ExcelColumn label="Order Status" value="phone_number"/>
+                                <ExcelColumn label="Order Number" value="contact_name"/>
+                                <ExcelColumn label="Customer Name" value="name"/>
+                                <ExcelColumn label="Product name" value="contact_phone_number"/>
+                            </ExcelSheet>
+                        </ExcelFile>
+                    </Menu.Item>
+                    <Menu.Item icon={<FileExcelOutlined />}>
+                        <ExcelFile element={<span>Download for havi</span>} filename={Constants.customerInfoFileName}>
+                            <ExcelSheet data={[customerInfo]} name="Orders">
+                                <ExcelColumn label="Order Status" value="phone_number"/>
+                                <ExcelColumn label="Order Number" value="contact_name"/>
+                                <ExcelColumn label="Customer Name" value="name"/>
+                                <ExcelColumn label="Product name" value="contact_phone_number"/>
+                            </ExcelSheet>
+                        </ExcelFile>
+                    </Menu.Item>
+                </Menu>}>
+                    <Button className='action'>
+                        DOWNLOAD
+                    </Button>
+                </Dropdown>
             </div>
             <div className='customer-info'>
                 <Row className='bg-white'>
