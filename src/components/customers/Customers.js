@@ -79,7 +79,7 @@ const Customers = () => {
             <div className='customers'>
                 {customersData.map(customer => {
                     return (
-                        <Card style={{ width: 400 }} className='customer-card'>
+                        <Card style={{ width: 400 }} className='customer-card' key={customer.id}>
                             <div className='customer-info'>
                                 <Image
                                     width={150}
