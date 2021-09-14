@@ -29,7 +29,7 @@ const Orders = ({location}) => {
             let allOrders = [];
             allOrders = response;
             setOrdersData(allOrders);
-            if (location.props.customerFilterSearch) {
+            if (location.props && location.props.customerFilterSearch) {
                 allOrders = allOrders.filter(order => order.customerName.includes(location.props.customerFilterSearch));
             }
             setCurrentTableData(allOrders);
@@ -38,8 +38,8 @@ const Orders = ({location}) => {
         // eslint-disable-next-line
     }, []);
 
-    // eslint-disable-next-line
-    const [orderStatuses, setOrderStatuses] = useState(['New Order', 'Image Uploaded', 'Order Confirmed', 'Delivered', 'Completed', 'Issue']);
+    const allOrderStatuses = ['New Order', 'Image Uploaded', 'Order Confirmed', 'Delivered', 'Completed', 'Issue'];
+    const [orderStatuses, setOrderStatuses] = useState(allOrderStatuses);
 
     const [customers, setCustomers] = useState([...new Set(currentTableData.map(order => order.customerName))]);
 
@@ -131,7 +131,8 @@ const Orders = ({location}) => {
                             } else {
                                 let filteredData = ordersData;
                                 if (customerNameFilter !== undefined) {
-                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter))
+                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
+                                    setOrderStatuses(filteredData.map(order => order.orderStatus));
                                 }
                                 setCurrentTableData(filteredData);
                                 setCustomers([...new Set(ordersData.map(order => order.customerName))]);
@@ -179,17 +180,17 @@ const Orders = ({location}) => {
                             setCustomerNameFilter(customerName);
                             if (customerName !== undefined) {
                                 let filteredData = currentTableData.filter(order => order.customerName.includes(customerName))
-                                console.log('orderStatusFilter', orderStatusFilter);
                                 setCurrentTableData(filteredData);
-                                // const filteredCustomers = filteredData.map(order => order.customerName);
-                                // setCustomers(filteredCustomers);
+                                const filteredOrderStatus = filteredData.map(order => order.orderStatus);
+                                setOrderStatuses(filteredOrderStatus);
                             } else {
                                 let filteredData = ordersData;
                                 if (orderStatusFilter !== undefined) {
                                     filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
+                                    setCustomers(filteredData.map(order => order.customerName));
                                 }
                                 setCurrentTableData(filteredData);
-                                // setCustomers([...new Set(tableData.map(order => order.customerName))]);
+                                setOrderStatuses(allOrderStatuses);
                             }
                         }}
                         filterOption={(input, option) =>

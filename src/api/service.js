@@ -58,6 +58,15 @@ const APIService = {
                         quantity: 25,
                         attachment: false,
                     },
+                    {
+                        key: '7',
+                        orderStatus: 'Image Uploaded',
+                        orderNumber: 7,
+                        customerName: 'John Doe',
+                        item: 'Frozen Chicken Wholewing',
+                        quantity: 13,
+                        attachment: true,
+                    },
                 ]);
             }, 2000);
         })
