@@ -176,27 +176,19 @@ const Orders = ({location}) => {
                         value={orderNumberFilter}
                         onChange={(orderNo) => {
                             setOrderNumberFilter(orderNo);
+                            let filteredData;
                             if (orderNo !== undefined) {
-                                let filteredData = currentTableData.filter(order => order.orderNumber === orderNo);
-
-                                if (isNotNullAndNotUndefined(customerNameFilter)) {
-                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
-                                }
-                                if (isNotNullAndNotUndefined(orderStatusFilter)) {
-                                    filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
-                                }
-                                changeFilterOptions(filteredData);
-
+                                filteredData = currentTableData.filter(order => order.orderNumber === orderNo);
                             } else {
-                                let filteredData = ordersData;
-                                if (isNotNullAndNotUndefined(customerNameFilter)) {
-                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
-                                }
-                                if (isNotNullAndNotUndefined(orderStatusFilter)) {
-                                    filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
-                                }
-                                changeFilterOptions(filteredData);
+                                filteredData = ordersData;
                             }
+                            if (isNotNullAndNotUndefined(customerNameFilter)) {
+                                filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
+                            }
+                            if (isNotNullAndNotUndefined(orderStatusFilter)) {
+                                filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
+                            }
+                            changeFilterOptions(filteredData);
                         }}
                         optionFilterProp="children"
                         filterOption={(input, option) =>
@@ -235,9 +227,7 @@ const Orders = ({location}) => {
                                 if (isNotNullAndNotUndefined(orderNumberFilter)) {
                                     filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
                                 }
-                                setOrderStatuses([...new Set(filteredData.map(order => order.orderStatus))]);
-                                setCustomers([...new Set(filteredData.map(order => order.customerName))]);
-                                setCurrentTableData(filteredData);
+                                changeFilterOptions(filteredData);
                             }
                         }}
                         filterOption={(input, option) =>
