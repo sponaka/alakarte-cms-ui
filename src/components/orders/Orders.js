@@ -16,7 +16,9 @@ const Orders = ({location}) => {
     const [loading, setLoading] = useState(false);
 
     const [orderStatusFilter, setOrderStatusFilter] = useState(null);
-    const [customerNameFilter, setCustomerNameFilter] = useState();
+    const [customerNameFilter, setCustomerNameFilter] = useState(null);
+    const [orderNumberFilter, setOrderNumberFilter] = useState(null);
+
     const [ordersData, setOrdersData] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
 
@@ -155,7 +157,34 @@ const Orders = ({location}) => {
                         allowClear
                         style={{width: 200}}
                         placeholder="Search"
-                        onChange={(event) => console.log(event)}
+                        value={orderNumberFilter}
+                        onChange={(orderNo) => {
+                            setOrderNumberFilter(orderNo);
+                            if (orderNo !== undefined) {
+                                let filteredData = currentTableData.filter(order => order.orderNumber === orderNo);
+                                setCurrentTableData(filteredData);
+                                if (customerNameFilter !== undefined) {
+                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
+                                    setCustomers(filteredData.map(order => order.customerName));
+                                }
+                                if (orderStatusFilter !== undefined) {
+                                    filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
+                                    setOrderStatuses(filteredData.map(order => order.orderStatus));
+                                }
+
+                            } else  {
+                                let filteredData = ordersData;
+                                if (customerNameFilter !== undefined) {
+                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
+                                    setCustomers(filteredData.map(order => order.customerName));
+                                }
+                                if (orderStatusFilter !== undefined) {
+                                    filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
+                                    setOrderStatuses(filteredData.map(order => order.orderStatus));
+                                }
+                                setCurrentTableData(filteredData);
+                            }
+                        }}
                         optionFilterProp="children"
                         filterOption={(input, option) =>
                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
