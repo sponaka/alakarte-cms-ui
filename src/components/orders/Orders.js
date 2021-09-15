@@ -22,15 +22,22 @@ const Orders = ({location}) => {
     const [ordersData, setOrdersData] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
 
+    const allOrderStatuses = ['New Order', 'Image Uploaded', 'Order Confirmed', 'Delivered', 'Completed', 'Issue'];
+    const [orderStatuses, setOrderStatuses] = useState(allOrderStatuses);
+
+    const [customers, setCustomers] = useState([]);
+
     useEffect(() => {
         if (location.props) {
             setCustomerNameFilter(location.props.customerFilterSearch);
         }
         setLoading(true);
         APIService.getCustomers().then((response) => {
-            let allOrders = [];
+            let allOrders;
             allOrders = response;
             setOrdersData(allOrders);
+            const customers = [...new Set(allOrders.map(order => order.customerName))];
+            setCustomers(customers);
             if (location.props && location.props.customerFilterSearch) {
                 allOrders = allOrders.filter(order => order.customerName.includes(location.props.customerFilterSearch));
             }
@@ -39,11 +46,6 @@ const Orders = ({location}) => {
         });
         // eslint-disable-next-line
     }, []);
-
-    const allOrderStatuses = ['New Order', 'Image Uploaded', 'Order Confirmed', 'Delivered', 'Completed', 'Issue'];
-    const [orderStatuses, setOrderStatuses] = useState(allOrderStatuses);
-
-    const [customers, setCustomers] = useState([...new Set(currentTableData.map(order => order.customerName))]);
 
     const orderNumbers = currentTableData.map(order => order.orderNumber);
 
@@ -110,6 +112,15 @@ const Orders = ({location}) => {
             </ExcelSheet>
         </ExcelFile>
     }
+
+    const changeFilterOptions = (filteredData) => {
+        setOrderStatuses([...new Set(filteredData.map(order => order.orderStatus))]);
+        setCustomers([...new Set(filteredData.map(order => order.customerName))]);
+        setCurrentTableData(filteredData);
+    }
+
+    const isNotNullAndNotUndefined = (input) => input !== null && input !== undefined;
+
     return (
         <div className='orders-list'>
             <h1 className='page-title'>Order list</h1>
@@ -125,19 +136,24 @@ const Orders = ({location}) => {
                         onChange={(status) => {
                             setOrderStatusFilter(status);
                             if (status !== undefined) {
+                                console.log('orderStatusFilter', status);
+
                                 const filteredData = currentTableData.filter(order => order.orderStatus.includes(status))
                                 setCurrentTableData(filteredData);
                                 const filteredCustomers = filteredData.map(order => order.customerName);
-                                setCustomers(filteredCustomers);
+                                setCustomers([...new Set(filteredCustomers)]);
 
                             } else {
+                                console.log('orderStatusFilter else', orderStatuses);
+
                                 let filteredData = ordersData;
-                                if (customerNameFilter !== undefined) {
+                                if (isNotNullAndNotUndefined(customerNameFilter)) {
                                     filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
-                                    setOrderStatuses(filteredData.map(order => order.orderStatus));
                                 }
-                                setCurrentTableData(filteredData);
-                                setCustomers([...new Set(ordersData.map(order => order.customerName))]);
+                                if (isNotNullAndNotUndefined(orderNumberFilter)) {
+                                    filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
+                                }
+                                changeFilterOptions(filteredData);
                             }
                         }}
                         filterOption={(input, option) =>
@@ -147,7 +163,7 @@ const Orders = ({location}) => {
                             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                     >
-                        {orderStatuses.map(status =>  <Option value={status}>{status}</Option>)}
+                        {orderStatuses.map((status, index) => <Option key={index} value={status}>{status}</Option>)}
                     </Select>
                 </div>
                 <div className='order-number'>
@@ -162,27 +178,24 @@ const Orders = ({location}) => {
                             setOrderNumberFilter(orderNo);
                             if (orderNo !== undefined) {
                                 let filteredData = currentTableData.filter(order => order.orderNumber === orderNo);
-                                setCurrentTableData(filteredData);
-                                if (customerNameFilter !== undefined) {
-                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
-                                    setCustomers(filteredData.map(order => order.customerName));
-                                }
-                                if (orderStatusFilter !== undefined) {
-                                    filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
-                                    setOrderStatuses(filteredData.map(order => order.orderStatus));
-                                }
 
-                            } else  {
-                                let filteredData = ordersData;
-                                if (customerNameFilter !== undefined) {
+                                if (isNotNullAndNotUndefined(customerNameFilter)) {
                                     filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
-                                    setCustomers(filteredData.map(order => order.customerName));
                                 }
-                                if (orderStatusFilter !== undefined) {
+                                if (isNotNullAndNotUndefined(orderStatusFilter)) {
                                     filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
-                                    setOrderStatuses(filteredData.map(order => order.orderStatus));
                                 }
-                                setCurrentTableData(filteredData);
+                                changeFilterOptions(filteredData);
+
+                            } else {
+                                let filteredData = ordersData;
+                                if (isNotNullAndNotUndefined(customerNameFilter)) {
+                                    filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
+                                }
+                                if (isNotNullAndNotUndefined(orderStatusFilter)) {
+                                    filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
+                                }
+                                changeFilterOptions(filteredData);
                             }
                         }}
                         optionFilterProp="children"
@@ -193,7 +206,8 @@ const Orders = ({location}) => {
                             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                     >
-                        {orderNumbers.map(orderNumber =>  <Option value={orderNumber}>{orderNumber}</Option>)}
+                        {orderNumbers.map(orderNumber => <Option key={orderNumber}
+                                                                 value={orderNumber}>{orderNumber}</Option>)}
                     </Select>
                 </div>
                 <div className='order-customer'>
@@ -207,6 +221,7 @@ const Orders = ({location}) => {
                         value={customerNameFilter}
                         onChange={(customerName) => {
                             setCustomerNameFilter(customerName);
+                            console.log('cust filter', customerName);
                             if (customerName !== undefined) {
                                 let filteredData = currentTableData.filter(order => order.customerName.includes(customerName))
                                 setCurrentTableData(filteredData);
@@ -214,12 +229,15 @@ const Orders = ({location}) => {
                                 setOrderStatuses(filteredOrderStatus);
                             } else {
                                 let filteredData = ordersData;
-                                if (orderStatusFilter !== undefined) {
+                                if (isNotNullAndNotUndefined(orderStatusFilter)) {
                                     filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
-                                    setCustomers(filteredData.map(order => order.customerName));
                                 }
+                                if (isNotNullAndNotUndefined(orderNumberFilter)) {
+                                    filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
+                                }
+                                setOrderStatuses([...new Set(filteredData.map(order => order.orderStatus))]);
+                                setCustomers([...new Set(filteredData.map(order => order.customerName))]);
                                 setCurrentTableData(filteredData);
-                                setOrderStatuses(allOrderStatuses);
                             }
                         }}
                         filterOption={(input, option) =>
@@ -229,7 +247,7 @@ const Orders = ({location}) => {
                             optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
                         }
                     >
-                        {customers.map(customerName =>  <Option value={customerName}>{customerName}</Option>)}
+                        {customers.map((customerName, index) =>  <Option key={index} value={customerName}>{customerName}</Option>)}
 
                     </Select>
                 </div>
