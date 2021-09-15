@@ -12,6 +12,7 @@ const APIService = {
                         item: 'Frozen Chicken Wholewing',
                         quantity: 20,
                         attachment: true,
+                        orderDate: '2021-08-17'
                     },
                     {
                         key: '2',
@@ -21,6 +22,7 @@ const APIService = {
                         quantity: 5,
                         attachment: true,
                         customerName: 'Dileep Kumar Jami',
+                        orderDate: '2021-09-11'
                     },
                     {
                         key: '3',
@@ -30,6 +32,7 @@ const APIService = {
                         quantity: 10,
                         customerName: 'Shrey Baheti',
                         attachment: false,
+                        orderDate: '2021-08-30'
                     },
                     {
                         key: '4',
@@ -39,6 +42,7 @@ const APIService = {
                         quantity: 20,
                         customerName: 'John Wick',
                         attachment: false,
+                        orderDate: '2021-09-10'
                     },
                     {
                         key: '5',
@@ -48,6 +52,7 @@ const APIService = {
                         quantity: 15,
                         customerName: 'John Wick',
                         attachment: true,
+                        orderDate: '2021-08-23'
                     },
                     {
                         key: '6',
@@ -57,6 +62,7 @@ const APIService = {
                         item: 'Frozen Chicken Wholewing',
                         quantity: 25,
                         attachment: false,
+                        orderDate: '2021-09-03'
                     },
                     {
                         key: '7',
@@ -66,6 +72,7 @@ const APIService = {
                         item: 'Frozen Chicken Wholewing',
                         quantity: 13,
                         attachment: true,
+                        orderDate: '2021-09-12'
                     },
                 ]);
             }, 2000);
