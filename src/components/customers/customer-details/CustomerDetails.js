@@ -46,10 +46,12 @@ const CustomerDetails = ({match}) => {
         <Menu.Item icon={<FileExcelOutlined />} key='1'>
             <ExcelFile element={<span>Download for finance</span>} filename={Constants.customerInfoFileName}>
                 <ExcelSheet data={[customerInfo]} name="Orders">
-                    <ExcelColumn label="Order Status" value="phone_number"/>
-                    <ExcelColumn label="Order Number" value="contact_name"/>
-                    <ExcelColumn label="Customer Name" value="name"/>
-                    <ExcelColumn label="Product name" value="contact_phone_number"/>
+                    <ExcelColumn label="Restaurant name" value="phone_number"/>
+                    <ExcelColumn label="Restaurant address" value="contact_name"/>
+                    <ExcelColumn label="Tax identification number" value="name"/>
+                    <ExcelColumn label="DTI or SEC Certificate" value={() => 'Attached on email'} />
+                    <ExcelColumn label="Current Municipal Business Permit" value={() => 'Attached on email'} />
+                    <ExcelColumn label="BIR form 2303 'Certificate of Registration'" value={() => 'Attached on email'} />
                 </ExcelSheet>
             </ExcelFile>
         </Menu.Item>
