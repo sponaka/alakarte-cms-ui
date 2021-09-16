@@ -5,9 +5,9 @@ parameters:
     type: string
 
 stages:
-  - stage: ${{ parameters.environmentName }}_security
+  - stage: ${{ parameters.environmentName }}_code_scan
     jobs:
-      - deployment: security_scan_${{ parameters.environmentName}}
+      - deployment: snyk_scan_${{ parameters.environmentName}}
         pool:
           vmImage: 'ubuntu-latest'
         environment: "alakarte-${{ parameters.environmentName}}-cloud"
