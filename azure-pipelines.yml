@@ -33,7 +33,7 @@ stages:
         inputs:
           serviceConnectionEndpoint: 'Snyk'
           testType: 'app'
-          severityThreshold: 'high'
+          severityThreshold: 'critical'
           monitorWhen: 'always'
           failOnIssues: true
           projectName: 'alakarte-cms'
