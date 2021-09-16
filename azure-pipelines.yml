@@ -28,6 +28,13 @@ stages:
             cd '$(Build.SourcesDirectory)'
             npm install
             npm run build
+      - task: SnykSecurityScan@1
+        inputs:
+          serviceConnectionEndpoint: 'Snyk'
+          testType: 'app'
+          monitorWhen: 'always'
+          failOnIssues: true
+          projectName: 'alakarte-cms'
       - task: ArchiveFiles@2
         displayName: 'Archive files'
         inputs:
