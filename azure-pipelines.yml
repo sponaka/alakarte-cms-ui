@@ -28,7 +28,7 @@ stages:
             cd '$(Build.SourcesDirectory)'
             npm install
             npm run build
-
+      # Code security scan
       # - task: ArchiveFiles@2
       #   displayName: 'Archive files'
       #   inputs:
@@ -37,6 +37,7 @@ stages:
       #     archiveType: zip
       #     archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       #     replaceExistingArchive: true
+
       - publish: '$(Build.SourcesDirectory)/build'
         artifact: web-cms
         displayName: 'artifacts: upload web-cms'
@@ -52,7 +53,7 @@ stages:
       deployBranch: ${{ variables['Build.SourceBranchName'] }}
       environmentName: ${{ variables['Build.SourceBranchName'] }}
 
-  - template: snyk.yml
-    parameters:
-      deployBranch: ${{ variables['Build.SourceBranchName'] }}
-      environmentName: ${{ variables['Build.SourceBranchName'] }}
+  # - template: snyk.yml
+  #   parameters:
+  #     deployBranch: ${{ variables['Build.SourceBranchName'] }}
+  #     environmentName: ${{ variables['Build.SourceBranchName'] }}
