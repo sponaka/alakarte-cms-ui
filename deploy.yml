@@ -35,4 +35,4 @@ stages:
                     azureSubscription: 'Horizons Studio - AlaKarte'
                     scriptType: 'bash'
                     scriptLocation: 'inlineScript'
-                    inlineScript: 'az cdn endpoint purge -g alakarte-${{parameters.environmentName}} -n alakarte-${{parameters.environmentName}}-www --profile-name alakarte-${{parameters.environmentName}}-cdn-profile --content-paths ''/*'' --no-wait'
+                    inlineScript: 'az cdn endpoint purge -g alakarte-${{parameters.environmentName}}-rg -n alakarte-${{parameters.environmentName}}-www --profile-name alakarte-${{parameters.environmentName}}-cdn-profile --content-paths ''/*'' --no-wait'
