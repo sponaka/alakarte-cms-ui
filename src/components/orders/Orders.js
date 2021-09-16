@@ -60,6 +60,14 @@ const Orders = ({location}) => {
             key: 'orderStatus',
         },
         {
+            title: 'Order Date',
+            dataIndex: 'orderDate',
+            key: 'orderDate',
+            render: (date) => {
+                return <span>{date}</span>;
+            }
+        },
+        {
             title: 'Order Number',
             dataIndex: 'orderNumber',
             key: 'orderNumber',
@@ -107,6 +115,7 @@ const Orders = ({location}) => {
             <ExcelSheet data={currentTableData} name="Orders">
                 <ExcelColumn label="Order Status" value="orderStatus"/>
                 <ExcelColumn label="Order Number" value="orderNumber"/>
+                <ExcelColumn label="Order Date" value="orderDate"/>
                 <ExcelColumn label="Customer Name" value="customerName"/>
                 <ExcelColumn label="Product name" value="item"/>
             </ExcelSheet>
