@@ -112,15 +112,10 @@ const Orders = ({location}) => {
     const { Option } = Select;
 
     const dateExistsBetweenRange = (orderDate, fromDate, toDate) => {
-        let dateFrom = fromDate.split("-");
-        let dateTo = toDate.split("-");
-        let dateToCheck = orderDate.split("-");
-
-        let from = new Date(dateFrom[0], parseInt(dateFrom[1]) - 1, dateFrom[2]);  // -1 because months are from 0 to 11
-        let to = new Date(dateTo[0], parseInt(dateTo[1]) - 1, dateTo[2]);
-        let check = new Date(dateToCheck[0], parseInt(dateToCheck[1]) - 1, dateToCheck[2]);
-
-        return (from <= check && check <= to);
+        const dateFrom = moment(fromDate, "YYYY-MM-DD");
+        const dateTo = moment(toDate, "YYYY-MM-DD");
+        const dateToCheck = moment(orderDate, "YYYY-MM-DD");
+        return dateToCheck.isBetween(dateFrom, dateTo, 'days', '[]');
     }
 
     const DownloadExcel = () => {
@@ -190,10 +185,16 @@ const Orders = ({location}) => {
                     <RangePicker style={{width: 250}} placeholder={['From', 'To']}
                                  value={orderDateRangeFilter}
                                  onChange={(range, dateStrings) => {
-                                     setOrderDateRangeFilter(dateStrings);
+                                     setOrderDateRangeFilter(range);
                                      console.log('date strings', dateStrings);
+                                     let filteredData;
                                      if (range !== null) {
                                          console.log('ranges', range[0]);
+                                         filteredData = ordersData.filter(order => dateExistsBetweenRange(order.orderDate, dateStrings[0], dateStrings[1]))
+                                         setCurrentTableData(filteredData);
+                                     } else {
+                                         filteredData = ordersData;
+                                         setCurrentTableData(filteredData);
                                      }
                                  }}/>
                 </div>
