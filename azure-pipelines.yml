@@ -33,9 +33,9 @@ stages:
         inputs:
           serviceConnectionEndpoint: 'Snyk'
           testType: 'app'
-          severityThreshold: 'critical'
+          severityThreshold: 'medium'
           monitorWhen: 'always'
-          failOnIssues: true
+          failOnIssues: false
           projectName: 'alakarte-cms'
 
       - publish: '$(Build.SourcesDirectory)/build'
