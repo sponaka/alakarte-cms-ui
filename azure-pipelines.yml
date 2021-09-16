@@ -53,7 +53,7 @@ stages:
       deployBranch: ${{ variables['Build.SourceBranchName'] }}
       environmentName: ${{ variables['Build.SourceBranchName'] }}
 
-  # - template: snyk.yml
-  #   parameters:
-  #     deployBranch: ${{ variables['Build.SourceBranchName'] }}
-  #     environmentName: ${{ variables['Build.SourceBranchName'] }}
+  - template: snyk.yml
+    parameters:
+      deployBranch: ${{ variables['Build.SourceBranchName'] }}
+      environmentName: ${{ variables['Build.SourceBranchName'] }}

@@ -15,6 +15,9 @@ stages:
           runOnce:
             deploy:
               steps:
+                - download: current
+                  artifact: web-cms
+                  displayName: 'artifacts: download web-cms'
                 - task: SnykSecurityScan@1
                   inputs:
                     serviceConnectionEndpoint: 'Snyk'
