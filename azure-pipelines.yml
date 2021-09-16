@@ -29,13 +29,13 @@ stages:
             npm install
             npm run build
       # Code security scan
-      - task: SnykSecurityScan@1
-        inputs:
-          serviceConnectionEndpoint: 'Snyk'
-          testType: 'app'
-          monitorWhen: 'always'
-          failOnIssues: true
-          projectName: 'alakarte-cms'
+      # - task: SnykSecurityScan@1
+      #   inputs:
+      #     serviceConnectionEndpoint: 'Snyk'
+      #     testType: 'app'
+      #     monitorWhen: 'always'
+      #     failOnIssues: true
+      #     projectName: 'alakarte-cms'
 
       - publish: '$(Build.SourcesDirectory)/build'
         artifact: web-cms

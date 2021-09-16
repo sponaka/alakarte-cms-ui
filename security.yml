@@ -15,17 +15,22 @@ stages:
           runOnce:
             deploy:
               steps:
-                # - task: SnykSecurityScan@1
+                # For scanning issues in project and org
+                # - task: ADOSecurityScanner@1
                 #   inputs:
-                #     serviceConnectionEndpoint: 'Snyk'
-                #     testType: 'app'
-                #     monitorWhen: 'always'
-                #     failOnIssues: true
-                #     projectName: 'alakarte-cms'
+                #     ADOConnectionName: 'ADO Security Service Connection'
+                #     OrgName: '$(System.CollectionUri)'
+                #     ProjectNames: '$(System.TeamProject)'
+                #     ScanFilter: 'Org_Project_User'
+                #     EnableOMSLogging: true
+                # For scanning issues in build
                 - task: ADOSecurityScanner@1
                   inputs:
                     ADOConnectionName: 'ADO Security Service Connection'
                     OrgName: '$(System.CollectionUri)'
                     ProjectNames: '$(System.TeamProject)'
-                    ScanFilter: 'Org_Project_User'
+                    ScanFilter: 'BuildReleaseSvcConnAgentPoolVarGroupUser'
+                    BuildNames: 'cms'
+                    ReleaseNames: 'r1'
+                    ServiceConnectionNames: 'ADO Security Connection'
                     EnableOMSLogging: true
