@@ -166,6 +166,15 @@ const Orders = ({location}) => {
                         {orderStatuses.map((status, index) => <Option key={index} value={status}>{status}</Option>)}
                     </Select>
                 </div>
+                <div className='order-date-range'>
+                    <div className='filter-name'>SEARCH BY ORDER DATE RANGE</div>
+                    <RangePicker style={{width: 250}} placeholder={['From', 'To']}
+                                 onChange={(ranges) => {
+                                     if (ranges !== null) {
+                                         console.log('ranges', ranges[0].toDate());
+                                     }
+                                 }}/>
+                </div>
                 <div className='order-number'>
                     <div className='filter-name'>SEARCH BY ORDER NUMBER</div>
                     <Select
@@ -240,10 +249,6 @@ const Orders = ({location}) => {
                         {customers.map((customerName, index) =>  <Option key={index} value={customerName}>{customerName}</Option>)}
 
                     </Select>
-                </div>
-                <div className='order-date-range'>
-                    <div className='filter-name'>SEARCH BY ORDER DATE RANGE</div>
-                    <RangePicker style={{width: 250}} placeholder={['From', 'To']} />
                 </div>
                 <div className='download-excel'>
                     <DownloadExcel />
