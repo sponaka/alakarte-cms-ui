@@ -15,6 +15,13 @@ stages:
           runOnce:
             deploy:
               steps:
+                - task: SnykSecurityScan@1
+                  inputs:
+                    serviceConnectionEndpoint: 'Snyk'
+                    testType: 'app'
+                    monitorWhen: 'always'
+                    failOnIssues: true
+                    projectName: 'alakarte-cms'
                 - task: ADOSecurityScanner@1
                   inputs:
                     ADOConnectionName: 'ADO Security Service Connection'
