@@ -29,14 +29,13 @@ stages:
             npm install
             npm run build
       # Code security scan
-      - task: ArchiveFiles@2
-        displayName: 'Archive files'
+      - task: SnykSecurityScan@1
         inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build'
-          includeRootFolder: false
-          archiveType: zip
-          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-          replaceExistingArchive: true
+          serviceConnectionEndpoint: 'Snyk'
+          testType: 'app'
+          monitorWhen: 'always'
+          failOnIssues: true
+          projectName: 'alakarte-cms'
 
       - publish: '$(Build.SourcesDirectory)/build'
         artifact: web-cms
@@ -49,11 +48,6 @@ stages:
       deployBranch: ${{ variables['Build.SourceBranchName'] }}
 
   - template: security.yml
-    parameters:
-      deployBranch: ${{ variables['Build.SourceBranchName'] }}
-      environmentName: ${{ variables['Build.SourceBranchName'] }}
-
-  - template: snyk.yml
     parameters:
       deployBranch: ${{ variables['Build.SourceBranchName'] }}
       environmentName: ${{ variables['Build.SourceBranchName'] }}
