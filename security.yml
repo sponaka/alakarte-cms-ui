@@ -1,0 +1,24 @@
+parameters:
+  - name: deployBranch
+    type: string
+  - name: environmentName
+    type: string
+
+stages:
+  - stage: ${{ parameters.environmentName }}_security
+    jobs:
+      - deployment: security_scan_${{ parameters.environmentName}}
+        pool:
+          vmImage: 'windows-latest'
+        environment: "alakarte-${{ parameters.environmentName}}-cloud"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: ADOSecurityScanner@1
+                  inputs:
+                    ADOConnectionName: 'ADO Security Service Connection'
+                    OrgName: '$(System.CollectionUri)'
+                    ProjectNames: '$(System.TeamProject)'
+                    ScanFilter: 'Org_Project_User'
+                    EnableOMSLogging: true

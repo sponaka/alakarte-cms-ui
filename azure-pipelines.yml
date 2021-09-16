@@ -4,18 +4,48 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+  branches:
+    include:
+    - dev
 
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+stages:
+  - stage: Build
+    jobs:
+    - job: build
+      steps:
+      - task: NodeTool@0
+        displayName: 'install: node.js'
+        inputs:
+          versionSpec: '14.x'
+      - task: Bash@3
+        displayName: 'npm install and build'
+        inputs:
+          targetType: 'inline'
+          script: |
+            cd '$(Build.SourcesDirectory)'
+            npm install
+            npm run build
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build'
+          includeRootFolder: false
+          archiveType: zip
+          archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+          replaceExistingArchive: true
+      - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        artifact: web-cms
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - template: deploy.yml
+    parameters:
+      dependsOn: Build
+      environmentName: ${{ variables['Build.SourceBranchName'] }}
+      deployBranch: ${{ variables['Build.SourceBranchName'] }}
+
+  - template: security.yml
+    parameters:
+      deployBranch: ${{ variables['Build.SourceBranchName'] }}
+      environmentName: ${{ variables['Build.SourceBranchName'] }}

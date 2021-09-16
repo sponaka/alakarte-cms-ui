@@ -1,0 +1,38 @@
+parameters:
+  - name: dependsOn
+    type: string
+  - name: environmentName
+    type: string
+  - name: deployBranch
+    type: string
+
+stages:
+  - stage: ${{ parameters.environmentName}}
+    dependsOn: ${{parameters.dependsOn}}
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/${{ parameters.deployBranch}}'))
+    jobs:
+      - deployment: deploy_${{ parameters.environmentName}}
+        pool:
+          vmImage: 'ubuntu-latest'
+        environment: "alakarte-${{ parameters.environmentName}}-cloud"
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: web-cms
+                  displayName: 'artifacts: download web-cms'
+                - task: AzureCLI@2
+                  displayName: 'az: storage blob sync'
+                  inputs:
+                    azureSubscription: 'Horizons Studio - AlaKarte'
+                    scriptType: 'bash'
+                    scriptLocation: 'inlineScript'
+                    inlineScript: 'az storage blob sync -c "\$web" --account-name alakarte${{parameters.environmentName}}cms -s "$(Pipeline.Workspace)/web-cms/"'
+                - task: AzureCLI@2
+                  displayName: 'az: cdn endpoint purge'
+                  inputs:
+                    azureSubscription: 'Horizons Studio - AlaKarte'
+                    scriptType: 'bash'
+                    scriptLocation: 'inlineScript'
+                    inlineScript: 'az cdn endpoint purge -g alakarte-${{parameters.environmentName}} -n alakarte-${{parameters.environmentName}}-www --profile-name alakarte-${{parameters.environmentName}}-cdn-profile --content-paths ''/*'' --no-wait'
