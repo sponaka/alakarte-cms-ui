@@ -32,3 +32,46 @@
 .ant-select-item-option-selected {
   background-color: #0062ff0d !important;
 }
+
+.ant-pagination {
+
+  font-size: 12px !important;
+  .ant-pagination-prev, .ant-pagination-item, .ant-pagination-item-link {
+    margin-right: 0;
+    border: none;
+  }
+
+  .ant-pagination-item {
+    min-width: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ant-pagination-item-active {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    a {
+      color: white;
+      background: #0062FF;
+      height: 18px;
+      width: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+  }
+
+  .ant-pagination-item-link {
+    .anticon {
+      background-color: #0058FF !important;
+      border-radius: 2px;
+      opacity: 0.3;
+      color: white;
+    }
+  }
+}
