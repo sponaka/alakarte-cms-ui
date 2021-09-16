@@ -24,13 +24,18 @@ stages:
                 #     ScanFilter: 'Org_Project_User'
                 #     EnableOMSLogging: true
                 # For scanning issues in build
+                # - task: ADOSecurityScanner@1
+                #   inputs:
+                #     ADOConnectionName: 'ADO Security Service Connection'
+                #     OrgName: '$(System.CollectionUri)'
+                #     ProjectNames: '$(System.TeamProject)'
+                #     ScanFilter: 'BuildReleaseSvcConnAgentPoolVarGroupUser'
+                #     ServiceConnectionNames: 'ADO Security Connection'
+                #     EnableOMSLogging: true
+                # For scanning above both
                 - task: ADOSecurityScanner@1
                   inputs:
                     ADOConnectionName: 'ADO Security Service Connection'
                     OrgName: '$(System.CollectionUri)'
                     ProjectNames: '$(System.TeamProject)'
-                    ScanFilter: 'BuildReleaseSvcConnAgentPoolVarGroupUser'
-                    BuildNames: 'cms'
-                    ReleaseNames: 'r1'
-                    ServiceConnectionNames: 'ADO Security Connection'
-                    EnableOMSLogging: true
+                    ScanFilter: 'All'
