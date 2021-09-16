@@ -5,6 +5,7 @@ import Icon from "@ant-design/icons";
 import ReactExport from "react-export-excel";
 import Constants from "../../constants";
 import APIService from "../../api/service";
+import moment from 'moment';
 
 const {ExcelFile} = ReactExport;
 const {ExcelSheet} = ExcelFile;
@@ -18,6 +19,7 @@ const Orders = ({location}) => {
     const [orderStatusFilter, setOrderStatusFilter] = useState(null);
     const [customerNameFilter, setCustomerNameFilter] = useState(null);
     const [orderNumberFilter, setOrderNumberFilter] = useState(null);
+    const [orderDateRangeFilter, setOrderDateRangeFilter] = useState([]);
 
     const [ordersData, setOrdersData] = useState([]);
     const [currentTableData, setCurrentTableData] = useState([]);
@@ -109,6 +111,18 @@ const Orders = ({location}) => {
 
     const { Option } = Select;
 
+    const dateExistsBetweenRange = (orderDate, fromDate, toDate) => {
+        let dateFrom = fromDate.split("-");
+        let dateTo = toDate.split("-");
+        let dateToCheck = orderDate.split("-");
+
+        let from = new Date(dateFrom[0], parseInt(dateFrom[1]) - 1, dateFrom[2]);  // -1 because months are from 0 to 11
+        let to = new Date(dateTo[0], parseInt(dateTo[1]) - 1, dateTo[2]);
+        let check = new Date(dateToCheck[0], parseInt(dateToCheck[1]) - 1, dateToCheck[2]);
+
+        return (from <= check && check <= to);
+    }
+
     const DownloadExcel = () => {
         return <ExcelFile element={<Button style={{color: 'black', border: '1px solid #707070', fontFamily: 'Poppins-SemiBold'
         }}>DOWNLOAD</Button>} filename={Constants.ordersFileName}>
@@ -174,9 +188,12 @@ const Orders = ({location}) => {
                 <div className='order-date-range'>
                     <div className='filter-name'>SEARCH BY ORDER DATE RANGE</div>
                     <RangePicker style={{width: 250}} placeholder={['From', 'To']}
-                                 onChange={(ranges) => {
-                                     if (ranges !== null) {
-                                         console.log('ranges', ranges[0].toDate());
+                                 value={orderDateRangeFilter}
+                                 onChange={(range, dateStrings) => {
+                                     setOrderDateRangeFilter(dateStrings);
+                                     console.log('date strings', dateStrings);
+                                     if (range !== null) {
+                                         console.log('ranges', range[0]);
                                      }
                                  }}/>
                 </div>
