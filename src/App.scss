@@ -1,6 +1,6 @@
 .ant-menu-item-selected {
-  color: #0062FF !important;
-  background-color: #0062ff0d !important;
+  color: #0062FF !important;;
+  background-color: rgba(0, 98, 255, .05) !important;;
   border-radius: 0 4px 4px 0;
 }
 
@@ -9,6 +9,7 @@
 }
 
 .ant-menu-item {
+  padding-left: 24px !important;
 
   &:hover {
     color: #0062FF !important;

@@ -1,5 +1,5 @@
 import React from "react";
-import {Layout, Menu} from "antd";
+import {Layout} from "antd";
 import "./Sidebar.scss"
 import {Link, useLocation} from "react-router-dom";
 
@@ -14,28 +14,28 @@ const SideBar = () => {
             collapsedWidth={0}
             trigger={null}
         >
-            <Menu theme="light" defaultSelectedKeys={[location.pathname]} mode="inline" className='menu-items'>
-                <Menu.Item key="/">
+            <ul className="ant-menu ant-menu-root ant-menu-inline ant-menu-light menu-items">
+                <li key="/" className={location.pathname === '/' ? 'ant-menu-item ant-menu-item-selected': 'ant-menu-item'}>
                     <span>Home</span>
                     <Link to="/" />
-                </Menu.Item>
-                <Menu.Item key="/orders">
+                </li>
+                <li key="/orders"  className={location.pathname === '/orders' ? 'ant-menu-item ant-menu-item-selected': 'ant-menu-item'}>
                     <span>Orders</span>
                     <Link to="/orders" />
-                </Menu.Item>
-                <Menu.Item key="/customers">
+                </li>
+                <li key="/customers"  className={location.pathname === '/customers' ? 'ant-menu-item ant-menu-item-selected': 'ant-menu-item'}>
                     <span>Customers</span>
                     <Link to="/customers" />
-                </Menu.Item>
-                <Menu.Item key="/customer-feedback">
+                </li>
+                <li key="/customer-feedback"  className={location.pathname === '/customer-feedback' ? 'ant-menu-item ant-menu-item-selected': 'ant-menu-item'}>
                     <span>Customer Feedback</span>
                     <Link to="/customer-feedback" />
-                </Menu.Item>
-                <Menu.Item key="/product">
+                </li>
+                <li key="/product"  className={location.pathname === '/product' ? 'ant-menu-item ant-menu-item-selected': 'ant-menu-item'}>
                     <span>Product</span>
                     <Link to="/product" />
-                </Menu.Item>
-            </Menu>
+                </li>
+            </ul>
         </Layout.Sider>
     );
 };
