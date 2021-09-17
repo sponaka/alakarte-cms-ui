@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: 'https://alakarte-django-rest-api.azurewebsites.net/'
+    baseURL: 'https://alakarte-dev-api.azurewebsites.net/'
 });
 
 export default apiClient;
