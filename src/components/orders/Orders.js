@@ -29,6 +29,7 @@ const Orders = ({location}) => {
 
     const [customers, setCustomers] = useState([]);
     const [orderNumbers, setOrderNumbers] = useState([]);
+    const [dateRangePeriod, setDateRangePeriod] = useState([]);
 
     useEffect(() => {
         if (location.props) {
@@ -135,6 +136,10 @@ const Orders = ({location}) => {
         setOrderStatuses([...new Set(filteredData.map(order => order.orderStatus))]);
         setCustomers([...new Set(filteredData.map(order => order.customerName))]);
         setOrderNumbers(filteredData.map(order => order.orderNumber));
+        const momentDates = filteredData.map(order => moment(order.orderDate));
+        console.log('min', moment.min(momentDates).format('YYYY-MM-DD'));
+        console.log('max', moment.max(momentDates));
+        setDateRangePeriod([moment.min(momentDates), moment.max(momentDates).add(1, 'days')]);
         setCurrentTableData(filteredData);
     }
 
@@ -162,12 +167,18 @@ const Orders = ({location}) => {
                                 console.log('orderStatusFilter else', orderStatuses);
                                 filteredData = ordersData;
                             }
+                            console.log('test', orderDateRangeFilter);
                             if (isNotNullAndNotUndefined(customerNameFilter)) {
                                 filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
                             }
                             if (isNotNullAndNotUndefined(orderNumberFilter)) {
                                 filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
                             }
+                            console.log('filter date', orderDateRangeFilter);
+                            // if (isNotNullAndNotUndefined(orderDateRangeFilter) && orderDateRangeFilter.length !== 0) {
+                            //     console.log('filter date', orderDateRangeFilter[0].format('YYYY-MM-DD'));
+                            //     filteredData = filteredData.filter(order => dateExistsBetweenRange(order.orderDate, orderDateRangeFilter[0].format('YYYY-MM-DD'), orderDateRangeFilter[1].format('YYYY-MM-DD')));
+                            // }
                             changeFilterOptions(filteredData);
                         }}
                         filterOption={(input, option) =>
@@ -184,18 +195,29 @@ const Orders = ({location}) => {
                     <div className='filter-name'>SEARCH BY ORDER DATE RANGE</div>
                     <RangePicker style={{width: 250}} placeholder={['From', 'To']}
                                  value={orderDateRangeFilter}
+                                 disabledDate={d => (dateRangePeriod[0] && dateRangePeriod[1]) && (!d || d.isSameOrAfter(dateRangePeriod[1] + 1) || d.isSameOrBefore(dateRangePeriod[0])) }
+                                 format="YYYY-MM-DD"
                                  onChange={(range, dateStrings) => {
                                      setOrderDateRangeFilter(range);
                                      console.log('date strings', dateStrings);
                                      let filteredData;
                                      if (range !== null) {
                                          console.log('ranges', range[0]);
-                                         filteredData = ordersData.filter(order => dateExistsBetweenRange(order.orderDate, dateStrings[0], dateStrings[1]))
-                                         setCurrentTableData(filteredData);
+                                         filteredData = ordersData.filter(order => dateExistsBetweenRange(order.orderDate, dateStrings[0], dateStrings[1]));
                                      } else {
+                                         console.log('empty', range);
                                          filteredData = ordersData;
-                                         setCurrentTableData(filteredData);
                                      }
+                                     if (isNotNullAndNotUndefined(customerNameFilter)) {
+                                         filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
+                                     }
+                                     if (isNotNullAndNotUndefined(orderNumberFilter)) {
+                                         filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
+                                     }
+                                     if (isNotNullAndNotUndefined(orderStatusFilter)) {
+                                         filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
+                                     }
+                                     changeFilterOptions(filteredData);
                                  }}/>
                 </div>
                 <div className='order-number'>
