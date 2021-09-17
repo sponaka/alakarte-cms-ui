@@ -175,10 +175,9 @@ const Orders = ({location}) => {
                                 filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
                             }
                             console.log('filter date', orderDateRangeFilter);
-                            // if (isNotNullAndNotUndefined(orderDateRangeFilter) && orderDateRangeFilter.length !== 0) {
-                            //     console.log('filter date', orderDateRangeFilter[0].format('YYYY-MM-DD'));
-                            //     filteredData = filteredData.filter(order => dateExistsBetweenRange(order.orderDate, orderDateRangeFilter[0].format('YYYY-MM-DD'), orderDateRangeFilter[1].format('YYYY-MM-DD')));
-                            // }
+                            if (isNotNullAndNotUndefined(orderDateRangeFilter) && orderDateRangeFilter.length !== 0) {
+                                filteredData = filteredData.filter(order => dateExistsBetweenRange(order.orderDate, orderDateRangeFilter[0].format('YYYY-MM-DD'), orderDateRangeFilter[1].format('YYYY-MM-DD')));
+                            }
                             changeFilterOptions(filteredData);
                         }}
                         filterOption={(input, option) =>
@@ -242,6 +241,9 @@ const Orders = ({location}) => {
                             if (isNotNullAndNotUndefined(orderStatusFilter)) {
                                 filteredData = filteredData.filter(order => order.orderStatus.includes(orderStatusFilter))
                             }
+                            if (isNotNullAndNotUndefined(orderDateRangeFilter) && orderDateRangeFilter.length !== 0) {
+                                filteredData = filteredData.filter(order => dateExistsBetweenRange(order.orderDate, orderDateRangeFilter[0].format('YYYY-MM-DD'), orderDateRangeFilter[1].format('YYYY-MM-DD')));
+                            }
                             changeFilterOptions(filteredData);
                         }}
                         optionFilterProp="children"
@@ -279,6 +281,9 @@ const Orders = ({location}) => {
                             }
                             if (isNotNullAndNotUndefined(orderNumberFilter)) {
                                 filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
+                            }
+                            if (isNotNullAndNotUndefined(orderDateRangeFilter) && orderDateRangeFilter.length !== 0) {
+                                filteredData = filteredData.filter(order => dateExistsBetweenRange(order.orderDate, orderDateRangeFilter[0].format('YYYY-MM-DD'), orderDateRangeFilter[1].format('YYYY-MM-DD')));
                             }
                             changeFilterOptions(filteredData);
                         }}
