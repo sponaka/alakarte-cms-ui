@@ -137,8 +137,6 @@ const Orders = ({location}) => {
         setCustomers([...new Set(filteredData.map(order => order.customerName))]);
         setOrderNumbers(filteredData.map(order => order.orderNumber));
         const momentDates = filteredData.map(order => moment(order.orderDate));
-        console.log('min', moment.min(momentDates).format('YYYY-MM-DD'));
-        console.log('max', moment.max(momentDates));
         setDateRangePeriod([moment.min(momentDates), moment.max(momentDates).add(1, 'days')]);
         setCurrentTableData(filteredData);
     }
@@ -161,20 +159,16 @@ const Orders = ({location}) => {
                             setOrderStatusFilter(status);
                             let filteredData;
                             if (status !== undefined) {
-                                console.log('orderStatusFilter', status);
                                 filteredData = ordersData.filter(order => order.orderStatus.includes(status));
                             } else {
-                                console.log('orderStatusFilter else', orderStatuses);
                                 filteredData = ordersData;
                             }
-                            console.log('test', orderDateRangeFilter);
                             if (isNotNullAndNotUndefined(customerNameFilter)) {
                                 filteredData = filteredData.filter(order => order.customerName.includes(customerNameFilter));
                             }
                             if (isNotNullAndNotUndefined(orderNumberFilter)) {
                                 filteredData = filteredData.filter(order => order.orderNumber === orderNumberFilter);
                             }
-                            console.log('filter date', orderDateRangeFilter);
                             if (isNotNullAndNotUndefined(orderDateRangeFilter) && orderDateRangeFilter.length !== 0) {
                                 filteredData = filteredData.filter(order => dateExistsBetweenRange(order.orderDate, orderDateRangeFilter[0].format('YYYY-MM-DD'), orderDateRangeFilter[1].format('YYYY-MM-DD')));
                             }
@@ -198,13 +192,10 @@ const Orders = ({location}) => {
                                  format="YYYY-MM-DD"
                                  onChange={(range, dateStrings) => {
                                      setOrderDateRangeFilter(range);
-                                     console.log('date strings', dateStrings);
                                      let filteredData;
                                      if (range !== null) {
-                                         console.log('ranges', range[0]);
                                          filteredData = ordersData.filter(order => dateExistsBetweenRange(order.orderDate, dateStrings[0], dateStrings[1]));
                                      } else {
-                                         console.log('empty', range);
                                          filteredData = ordersData;
                                      }
                                      if (isNotNullAndNotUndefined(customerNameFilter)) {
@@ -269,7 +260,6 @@ const Orders = ({location}) => {
                         value={customerNameFilter}
                         onChange={(customerName) => {
                             setCustomerNameFilter(customerName);
-                            console.log('cust filter', customerName);
                             let filteredData;
                             if (customerName !== undefined) {
                                 filteredData = ordersData.filter(order => order.customerName.includes(customerName));
