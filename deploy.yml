@@ -14,7 +14,7 @@ stages:
       - deployment: deploy_${{ parameters.environmentName}}
         pool:
           vmImage: 'ubuntu-latest'
-        environment: "alakarte-${{ parameters.environmentName}}-cloud"
+        environment: "alakarte-dev-cloud"
         strategy:
           runOnce:
             deploy:

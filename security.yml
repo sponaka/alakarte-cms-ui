@@ -10,7 +10,7 @@ stages:
       - deployment: security_scan_${{ parameters.environmentName}}
         pool:
           vmImage: 'windows-latest'
-        environment: "alakarte-${{ parameters.environmentName}}-cloud"
+        environment: "alakarte-dev-cloud"
         strategy:
           runOnce:
             deploy:
