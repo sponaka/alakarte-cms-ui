@@ -1,3 +1,7 @@
+# Deployment Status
+[![Build Status](https://dev.azure.com/horizon-studios/alakarte-cloud/_apis/build/status/horizons-ventures.alakarte-cms-ui?branchName=dev)](https://dev.azure.com/horizon-studios/alakarte-cloud/_build/latest?definitionId=14&branchName=dev)
+[![npm version](https://badge.fury.io/js/typescript.svg)](https://www.npmjs.com/package/typescript)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
