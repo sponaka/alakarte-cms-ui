@@ -32,8 +32,11 @@ const Orders = ({location}) => {
     const [dateRangePeriod, setDateRangePeriod] = useState([]);
 
     useEffect(() => {
-        if (location.props) {
+        if (location.props && location.props.customerFilterSearch) {
             setCustomerNameFilter(location.props.customerFilterSearch);
+        }
+        if (location.props && location.props.orderNoFilterSearch) {
+            setOrderNumberFilter(location.props.orderNoFilterSearch);
         }
         setLoading(true);
         APIService.getCustomers().then((response) => {
@@ -45,6 +48,9 @@ const Orders = ({location}) => {
             setOrderNumbers(allOrders.map(order => order.orderNumber))
             if (location.props && location.props.customerFilterSearch) {
                 allOrders = allOrders.filter(order => order.customerName.includes(location.props.customerFilterSearch));
+            }
+            if (location.props && location.props.orderNoFilterSearch) {
+                allOrders = allOrders.filter(order => order.orderNumber === location.props.orderNoFilterSearch);
             }
             setCurrentTableData(allOrders);
             setLoading(false);

@@ -43,8 +43,16 @@ const CustomerFeedback = () => {
                             <Rate allowHalf value={feedback.rating} className='rating' disabled/>
                             <div className='order-details'>
                                 <h4 className='feedback-title'>Order Number</h4>
+                                <Link
+                                    to={{
+                                        pathname: `/orders`,
+                                        props: {
+                                            orderNoFilterSearch: feedback.order_no
+                                        }
+                                    }}
+                                >
                                 <span className='order-no'>{feedback.order_no}</span>
-
+                                </Link>
                                 <h4 className='feedback-title'>Feedback</h4>
                                 <span className='remarks'>{feedback.remarks}</span>
                             </div>

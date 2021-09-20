@@ -8,7 +8,7 @@ const APIService = {
                         "customer_id": 1,
                         "customer_name": 'Ian Pisano',
                         "rating": 5,
-                        "order_no": 13426,
+                        "order_no": 1,
                         "remarks": "I have received the order right on time. It was such a fast and neat delivery.",
                         "active": true
                     },
@@ -17,7 +17,7 @@ const APIService = {
                         "customer_id": 2,
                         "customer_name": 'Akhil Mohan',
                         "rating": 4,
-                        "order_no": 26252,
+                        "order_no": 2,
                         "remarks": "The packaging is done quite nicely. Seems the stock is fresh",
                         "active": true
                     },
@@ -26,7 +26,7 @@ const APIService = {
                         "customer_id": 3,
                         "customer_name": 'Shrey Baheti',
                         "rating": 4.5,
-                        "order_no": 13542,
+                        "order_no": 3,
                         "remarks": "remarks",
                         "active": false
                     },
@@ -35,7 +35,7 @@ const APIService = {
                         "customer_id": 4,
                         "customer_name": 'Aakanshu Gupta',
                         "rating": 3.5,
-                        "order_no": 20421,
+                        "order_no": 4,
                         "remarks": "remarks",
                         "active": false
                     },
@@ -44,7 +44,7 @@ const APIService = {
                         "customer_id": 5,
                         "customer_name": 'Sambeet Sahu',
                         "rating": 3,
-                        "order_no": 12311,
+                        "order_no": 5,
                         "remarks": "remarks",
                         "active": true
                     }
