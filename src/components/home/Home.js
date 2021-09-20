@@ -18,7 +18,7 @@ const Home = () => {
                 </Card>
                 <Card className='card-item'>
                     <Link to={{
-                        pathname: `/customer`
+                        pathname: `/customers`
                     }}>
                         <span>Customers</span>
                     </Link>
