@@ -4,6 +4,7 @@ import './CustomerFeedback.scss';
 import {Card, Spin} from "antd";
 import { Rate } from 'antd';
 import APIService from "../../api/service";
+import {Link} from "react-router-dom";
 
 const CustomerFeedback = () => {
 
@@ -33,7 +34,11 @@ const CustomerFeedback = () => {
                     return (
                         <Card style={{width: 400}} className='feedback-card' key={feedback.feedbackId}>
                             <div className='customer-name'>
-                                {feedback.customer_name}
+                                <Link to={{
+                                    pathname: `/customer/${feedback.customer_id}`
+                                }}
+                                >{feedback.customer_name}
+                                </Link>
                             </div>
                             <Rate allowHalf value={feedback.rating} className='rating' disabled/>
                             <div className='order-details'>

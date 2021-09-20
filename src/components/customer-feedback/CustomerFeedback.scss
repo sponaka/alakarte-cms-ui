@@ -29,6 +29,10 @@
         color: #707070;
         text-transform: uppercase;
         font-family: Poppins-SemiBold, "Helvetica Neue", sans-serif;
+
+        a {
+          color: inherit !important;
+        }
       }
 
       .rating {
