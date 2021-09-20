@@ -9,10 +9,8 @@ import Orders from "./components/orders/Orders";
 import Customers from "./components/customers/Customers";
 import CustomerDetails from "./components/customers/customer-details/CustomerDetails";
 import CustomerFeedback from "./components/customer-feedback/CustomerFeedback";
+import Home from "./components/home/Home";
 
-function Home() {
-    return <div>Home</div>;
-}
 
 function App() {
     return (
