@@ -1,58 +1,29 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import './CustomerFeedback.scss';
-import {Card} from "antd";
+import {Card, Spin} from "antd";
 import { Rate } from 'antd';
+import APIService from "../../api/service";
 
 const CustomerFeedback = () => {
 
-    const customerFeedbackData = [
-        {
-            "feedbackId": 1,
-            "customer_id": 1,
-            "customer_name": 'Ian Pisano',
-            "rating": 5,
-            "order_no": 13426,
-            "remarks": "I have received the order right on time. It was such a fast and neat delivery.",
-            "active": true
-        },
-        {
-            "feedbackId": 2,
-            "customer_id": 2,
-            "customer_name": 'Akhil Mohan',
-            "rating": 4,
-            "order_no": 26252,
-            "remarks": "The packaging is done quite nicely. Seems the stock is fresh",
-            "active": true
-        },
-        {
-            "feedbackId": 3,
-            "customer_id": 3,
-            "customer_name": 'Shrey Baheti',
-            "rating": 4.5,
-            "order_no": 13542,
-            "remarks": "remarks",
-            "active": false
-        },
-        {
-            "feedbackId": 4,
-            "customer_id": 4,
-            "customer_name": 'Aakanshu Gupta',
-            "rating": 3.5,
-            "order_no": 20421,
-            "remarks": "remarks",
-            "active": false
-        },
-        {
-            "feedbackId": 5,
-            "customer_id": 5,
-            "customer_name": 'Sambeet Sahu',
-            "rating": 3,
-            "order_no": 12311,
-            "remarks": "remarks",
-            "active": true
-        }
-    ]
+    const [loading, setLoading] = useState(false);
+
+    const [customerFeedbackData, setCustomerFeedbackData] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        APIService.getCustomersFeedback().then(response => {
+           setCustomerFeedbackData(response);
+           setLoading(false);
+        }).catch((error) => {
+            setLoading(false);
+        });
+    }, [])
+
+    if (loading) {
+        return <div className='fetching'><Spin size="large" /></div>
+    }
 
     return (
         <div className='customer-feedback-page'>
