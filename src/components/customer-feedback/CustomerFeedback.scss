@@ -1,0 +1,60 @@
+.customer-feedback-page {
+  padding: 20px;
+
+  .page-title {
+    letter-spacing: 0.1px;
+    color: #171725;
+    font-family: Poppins-SemiBold, sans-serif;
+    margin-top: 5px;
+  }
+
+  .customer-feedback {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    .feedback-card {
+      background: #FFFFFF 0 0 no-repeat padding-box;
+      box-shadow: 0px 3px 6px #00000029;
+      border-radius: 11px;
+      width: 390px;
+
+      .ant-card-body {
+        padding: 18px;
+      }
+
+      .customer-name {
+        color: #707070;
+        text-transform: uppercase;
+        font-family: Poppins-SemiBold, "Helvetica Neue", sans-serif;
+      }
+
+      .rating {
+        color: rgba(0, 0, 0, 0.7) !important;
+        padding-top: 5px;
+      }
+
+      .order-details {
+
+        .feedback-title {
+          padding-top: 5px;
+          color: #707070;
+          font-family: Poppins-Medium, "Helvetica Neue", sans-serif;
+        }
+
+        .order-no {
+          color: #000000;
+          font-family: Poppins-SemiBold, "Helvetica Neue", sans-serif;
+        }
+
+        .remarks {
+          font-size: 12px;
+          color: #000000;
+          font-family: Poppins-Light;
+        }
+      }
+    }
+  }
+}

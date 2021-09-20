@@ -8,6 +8,7 @@ import SideBar from "./components/sidebar/Sidebar";
 import Orders from "./components/orders/Orders";
 import Customers from "./components/customers/Customers";
 import CustomerDetails from "./components/customers/customer-details/CustomerDetails";
+import CustomerFeedback from "./components/customer-feedback/CustomerFeedback";
 
 function Home() {
     return <div>Home</div>;
@@ -25,6 +26,7 @@ function App() {
                         <Route path="/orders" component={Orders} />
                         <Route path="/customers" component={Customers} />
                         <Route path="/customer/:id" component={CustomerDetails} />
+                        <Route path="/customer-feedback" component={CustomerFeedback} />
                     </Layout.Content>
                 </Layout>
             </Router>
