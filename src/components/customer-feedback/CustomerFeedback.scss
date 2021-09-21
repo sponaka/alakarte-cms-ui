@@ -9,6 +9,21 @@
   margin-top: 5px;
 }
 
+.filters-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 30px;
+
+  .filter-name {
+    color: #707070;
+    font: normal normal normal 12px Helvetica Neue;
+    font-family: Poppins, "Helvetica Neue" !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+
 .customer-feedback {
   margin-top: 25px;
   display: flex;

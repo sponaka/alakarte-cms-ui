@@ -47,6 +47,24 @@ const APIService = {
                         "order_no": 5,
                         "remarks": "remarks",
                         "active": true
+                    },
+                    {
+                        "feedbackId": 6,
+                        "customer_id": 3,
+                        "customer_name": 'Shrey Baheti',
+                        "rating": 4,
+                        "order_no": 6,
+                        "remarks": "remarks",
+                        "active": true
+                    },
+                    {
+                        "feedbackId": 7,
+                        "customer_id": 2,
+                        "customer_name": 'Akhil Mohan',
+                        "rating": 3,
+                        "order_no": 7,
+                        "remarks": "remarks",
+                        "active": true
                     }
                 ])
             }, 750);

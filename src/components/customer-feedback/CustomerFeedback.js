@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import './CustomerFeedback.scss';
-import {Card, Modal, Spin} from "antd";
+import {Card, Modal, Select, Spin} from "antd";
 import {Rate} from 'antd';
 import APIService from "../../api/service";
 import {Link} from "react-router-dom";
@@ -9,21 +9,42 @@ import {CloseCircleOutlined} from "@ant-design/icons";
 
 const CustomerFeedback = () => {
 
+    const {Option} = Select;
+
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedFeedback, setSelectedFeedback] = useState({});
 
+    const [customerNameFilter, setCustomerNameFilter] = useState(null);
+    const [orderNumberFilter, setOrderNumberFilter] = useState(null);
+    const [ratingFilter, setRatingFilter] = useState(null);
+
+    const [customers, setCustomers] = useState([]);
+    const [orderNumbers, setOrderNumbers] = useState([]);
+    const [ratings, setRatings] = useState([]);
+
     const [customerFeedbackData, setCustomerFeedbackData] = useState([]);
+    const [selectedCustomerFeedbackData, setSelectedCustomerFeedbackData] = useState([]);
 
     useEffect(() => {
         setLoading(true);
         APIService.getCustomersFeedback().then(response => {
             setCustomerFeedbackData(response);
+            updateFilterOptions(response);
             setLoading(false);
         }).catch((error) => {
             setLoading(false);
         });
     }, []);
+
+    const isNotNullAndNotUndefined = (input) => input !== null && input !== undefined;
+
+    const updateFilterOptions = (filteredData) => {
+        setRatings([...new Set(filteredData.map(feedback => feedback.rating))]);
+        setCustomers([...new Set(filteredData.map(feedback => feedback.customer_name))]);
+        setOrderNumbers(filteredData.map(order => order.order_no));
+        setSelectedCustomerFeedbackData(filteredData);
+    }
 
     const openFeedbackModal = (feedback) => {
         setIsModalVisible(true);
@@ -41,8 +62,93 @@ const CustomerFeedback = () => {
     return (
         <div className='customer-feedback-page'>
             <h1 className='page-title'>Customer feedback</h1>
+            <div className='filters-container'>
+                <div className='order-number'>
+                    <div className='filter-name'>SEARCH BY ORDER NUMBER</div>
+                    <Select
+                        showSearch
+                        allowClear
+                        style={{width: 200}}
+                        placeholder="Search"
+                        value={orderNumberFilter}
+                        onChange={(orderNo) => {
+                            setOrderNumberFilter(orderNo);
+                            let filteredData;
+                            if (orderNo !== undefined) {
+                                filteredData = customerFeedbackData.filter(feedback => feedback.order_no === orderNo);
+                            } else {
+                                filteredData = customerFeedbackData;
+                            }
+                            if (isNotNullAndNotUndefined(customerNameFilter)) {
+                                filteredData = filteredData.filter(feedback => feedback.customer_name.includes(customerNameFilter));
+                            }
+                            if (isNotNullAndNotUndefined(ratingFilter)) {
+                                filteredData = filteredData.filter(feedback => feedback.rating === ratingFilter)
+                            }
+                            updateFilterOptions(filteredData);
+                        }}
+                        optionFilterProp="children"
+                    >
+                        {orderNumbers.map(orderNumber => <Option key={orderNumber}
+                                                                 value={orderNumber}>{orderNumber}</Option>)}
+                    </Select>
+                </div>
+                <div className='order-status'>
+                    <div className='filter-name'>SEARCH BY RATING</div>
+                    <Select
+                        allowClear
+                        style={{width: 200}}
+                        placeholder="Select"
+                        optionFilterProp="children"
+                        value={ratingFilter}
+                        onChange={(rating) => {
+                            setRatingFilter(rating);
+                            let filteredData = (rating !== undefined) ? customerFeedbackData.filter(feedback => feedback.rating === rating) : customerFeedbackData;
+                            if (isNotNullAndNotUndefined(customerNameFilter)) {
+                                filteredData = filteredData.filter(order => order.customer_name.includes(customerNameFilter));
+                            }
+                            if (isNotNullAndNotUndefined(orderNumberFilter)) {
+                                filteredData = filteredData.filter(order => order.order_no === orderNumberFilter);
+                            }
+                            updateFilterOptions(filteredData);
+                        }}
+                    >
+                        {ratings.map((rating, index) => <Option key={index} value={rating}>{rating}</Option>)}
+                    </Select>
+                </div>
+                <div className='order-customer'>
+                    <div className='filter-name'>SEARCH BY CUSTOMER</div>
+                    <Select
+                        showSearch
+                        allowClear
+                        style={{width: 200}}
+                        placeholder="Search"
+                        optionFilterProp="children"
+                        value={customerNameFilter}
+                        onChange={(customerName) => {
+                            setCustomerNameFilter(customerName);
+                            let filteredData;
+                            if (customerName !== undefined) {
+                                filteredData = customerFeedbackData.filter(order => order.customer_name.includes(customerName));
+                            } else {
+                                filteredData = customerFeedbackData;
+                            }
+                            if (isNotNullAndNotUndefined(ratingFilter)) {
+                                filteredData = filteredData.filter(order => order.rating === ratingFilter);
+                            }
+                            if (isNotNullAndNotUndefined(orderNumberFilter)) {
+                                filteredData = filteredData.filter(order => order.order_no === orderNumberFilter);
+                            }
+                            updateFilterOptions(filteredData);
+                        }}
+                    >
+                        {customers.map((customerName, index) => <Option key={index}
+                                                                        value={customerName}>{customerName}</Option>)}
+                    </Select>
+                </div>
+            </div>
             <div className='customer-feedback'>
-                {customerFeedbackData.map(feedback => {
+                {selectedCustomerFeedbackData.map(feedback => {
                     return (
                         <Card style={{width: 400}} className='feedback-card' key={feedback.feedbackId}>
                             <div className='customer-name'>
