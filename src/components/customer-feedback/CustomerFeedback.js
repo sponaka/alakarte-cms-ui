@@ -40,7 +40,7 @@ const CustomerFeedback = () => {
     const isNotNullAndNotUndefined = (input) => input !== null && input !== undefined;
 
     const updateFilterOptions = (filteredData) => {
-        setRatings([...new Set(filteredData.map(feedback => feedback.rating))]);
+        setRatings([...new Set(filteredData.map(feedback => feedback.rating).sort())]);
         setCustomers([...new Set(filteredData.map(feedback => feedback.customer_name))]);
         setOrderNumbers(filteredData.map(order => order.order_no));
         setSelectedCustomerFeedbackData(filteredData);
@@ -83,7 +83,7 @@ const CustomerFeedback = () => {
                                 filteredData = filteredData.filter(feedback => feedback.customer_name.includes(customerNameFilter));
                             }
                             if (isNotNullAndNotUndefined(ratingFilter)) {
-                                filteredData = filteredData.filter(feedback => feedback.rating === ratingFilter)
+                                filteredData = filteredData.filter(feedback => feedback.rating === ratingFilter).sort();
                             }
                             updateFilterOptions(filteredData);
                         }}
@@ -134,7 +134,7 @@ const CustomerFeedback = () => {
                                 filteredData = customerFeedbackData;
                             }
                             if (isNotNullAndNotUndefined(ratingFilter)) {
-                                filteredData = filteredData.filter(order => order.rating === ratingFilter);
+                                filteredData = filteredData.filter(order => order.rating === ratingFilter).sort();
                             }
                             if (isNotNullAndNotUndefined(orderNumberFilter)) {
                                 filteredData = filteredData.filter(order => order.order_no === orderNumberFilter);
