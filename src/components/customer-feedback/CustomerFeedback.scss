@@ -21,13 +21,14 @@
   background: #FFFFFF 0 0 no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 11px;
-  width: 390px;
+  width: 390px !important;
+
+  .ant-card-body {
+    padding: 15px;
+    padding-bottom: 5px;
+  }
 }
 
-.ant-card-body {
-  padding: 15px;
-  padding-bottom: 5px;
-}
 
 .customer-name {
   color: #707070;

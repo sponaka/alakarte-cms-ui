@@ -8,6 +8,10 @@
     margin-top: 5px;
   }
 
+  .ant-card-body {
+    padding: 24px;
+  }
+
   .feature-cards {
     margin-top: 25px;
     display: flex;
@@ -20,7 +24,7 @@
       border-radius: 11px;
       font-size: 18px;
       border: 1px solid #f0f0f0;
-      font-family: Poppins-SemiBold;
+      font-family: Poppins-SemiBold, "Helvetica Neue", sans-serif;
 
       a {
         color: inherit !important;
