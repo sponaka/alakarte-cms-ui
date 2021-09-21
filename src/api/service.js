@@ -9,7 +9,7 @@ const APIService = {
                         "customer_name": 'Ian Pisano',
                         "rating": 5,
                         "order_no": 1,
-                        "remarks": "I have received the order right on time. It was such a fast and neat delivery.",
+                        "remarks": "I have received the order right on time. It was such a fast and neat delivery. I have received the order right on time. It was such a fast and neat delivery. I have received the order right on time. It was such a fast and neat delivery.",
                         "active": true
                     },
                     {

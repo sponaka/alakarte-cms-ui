@@ -1,29 +1,49 @@
 import React, {useEffect, useState} from "react";
 
 import './CustomerFeedback.scss';
-import {Card, Spin} from "antd";
-import { Rate } from 'antd';
+import {Card, Modal, Spin} from "antd";
+import {Rate} from 'antd';
 import APIService from "../../api/service";
 import {Link} from "react-router-dom";
+import {CloseCircleOutlined} from "@ant-design/icons";
 
 const CustomerFeedback = () => {
 
     const [loading, setLoading] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedFeedback, setSelectedFeedback] = useState({
+        "feedbackId": 5,
+        "customer_id": 5,
+        "customer_name": 'Sambeet Sahu',
+        "rating": 3,
+        "order_no": 5,
+        "remarks": "remarks",
+        "active": true
+    });
 
     const [customerFeedbackData, setCustomerFeedbackData] = useState([]);
 
     useEffect(() => {
         setLoading(true);
         APIService.getCustomersFeedback().then(response => {
-           setCustomerFeedbackData(response);
-           setLoading(false);
+            setCustomerFeedbackData(response);
+            setLoading(false);
         }).catch((error) => {
             setLoading(false);
         });
-    }, [])
+    }, []);
+
+    const openFeedbackModal = (feedback) => {
+        setIsModalVisible(true);
+        setSelectedFeedback(feedback);
+    }
+
+    const closeFeedbackModal = () => {
+        setIsModalVisible(false);
+    }
 
     if (loading) {
-        return <div className='fetching'><Spin size="large" /></div>
+        return <div className='fetching'><Spin size="large"/></div>
     }
 
     return (
@@ -51,16 +71,31 @@ const CustomerFeedback = () => {
                                         }
                                     }}
                                 >
-                                <span className='order-no'>{feedback.order_no}</span>
+                                    <span className='order-no'>{feedback.order_no}</span>
                                 </Link>
                                 <h4 className='feedback-title'>Feedback</h4>
-                                <span className='remarks'>{feedback.remarks}</span>
+                                <p className='remarks overflow-text' onClick={() =>
+                                    openFeedbackModal(feedback)
+                                }>{feedback.remarks}</p>
                             </div>
                         </Card>
                     );
                 })}
 
             </div>
+            <Modal visible={isModalVisible} footer={null} centered closeIcon={<CloseCircleOutlined/>}
+                   onCancel={closeFeedbackModal}>
+                <div className='customer-name'>
+                    {selectedFeedback.customer_name}
+                </div>
+                <Rate allowHalf value={selectedFeedback.rating} className='rating' disabled/>
+                <div className='order-details'>
+                    <h4 className='feedback-title'>Order Number</h4>
+                    <span className='order-no'>{selectedFeedback.order_no}</span>
+                    <h4 className='feedback-title'>Feedback</h4>
+                    <span className='remarks'>{selectedFeedback.remarks}</span>
+                </div>
+            </Modal>
         </div>
     );
 }
