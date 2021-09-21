@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import './CustomerFeedback.scss';
-import {Card, Modal, Select, Spin} from "antd";
+import {Button, Card, Modal, Select, Spin} from "antd";
 import {Rate} from 'antd';
 import APIService from "../../api/service";
 import {Link} from "react-router-dom";
@@ -57,6 +57,13 @@ const CustomerFeedback = () => {
 
     if (loading) {
         return <div className='fetching'><Spin size="large"/></div>
+    }
+
+    const resetFilters = () => {
+        setRatingFilter(null);
+        setCustomerNameFilter(null);
+        setOrderNumberFilter(null);
+        updateFilterOptions(customerFeedbackData);
     }
 
     return (
@@ -145,6 +152,9 @@ const CustomerFeedback = () => {
                         {customers.map((customerName, index) => <Option key={index}
                                                                         value={customerName}>{customerName}</Option>)}
                     </Select>
+                </div>
+                <div>
+                    <Button onClick={resetFilters} className='ant-btn-default'>Reset filters</Button>
                 </div>
             </div>
             <div className='customer-feedback'>

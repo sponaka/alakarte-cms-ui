@@ -147,6 +147,13 @@ const Orders = ({location}) => {
         setCurrentTableData(filteredData);
     }
 
+    const resetFilters = () => {
+        setOrderStatusFilter(null);
+        setCustomerNameFilter(null);
+        setOrderNumberFilter(null);
+        changeFilterOptions(ordersData);
+    }
+
     const isNotNullAndNotUndefined = (input) => input !== null && input !== undefined;
 
     return (
@@ -244,12 +251,6 @@ const Orders = ({location}) => {
                             changeFilterOptions(filteredData);
                         }}
                         optionFilterProp="children"
-                        filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                        filterSort={(optionA, optionB) =>
-                            optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                        }
                     >
                         {orderNumbers.map(orderNumber => <Option key={orderNumber}
                                                                  value={orderNumber}>{orderNumber}</Option>)}
@@ -293,6 +294,9 @@ const Orders = ({location}) => {
                         {customers.map((customerName, index) =>  <Option key={index} value={customerName}>{customerName}</Option>)}
 
                     </Select>
+                </div>
+                <div>
+                    <Button onClick={resetFilters} className='ant-btn-default'>Reset filters</Button>
                 </div>
                 <div className='download-excel'>
                     <DownloadExcel />
