@@ -11,15 +11,7 @@ const CustomerFeedback = () => {
 
     const [loading, setLoading] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selectedFeedback, setSelectedFeedback] = useState({
-        "feedbackId": 5,
-        "customer_id": 5,
-        "customer_name": 'Sambeet Sahu',
-        "rating": 3,
-        "order_no": 5,
-        "remarks": "remarks",
-        "active": true
-    });
+    const [selectedFeedback, setSelectedFeedback] = useState({});
 
     const [customerFeedbackData, setCustomerFeedbackData] = useState([]);
 
