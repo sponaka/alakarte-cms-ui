@@ -31,9 +31,9 @@ const SideBar = () => {
                     <span>Customer Feedback</span>
                     <Link to="/customer-feedback" />
                 </li>
-                <li key="/product"  className={location.pathname === '/product' ? 'ant-menu-item ant-menu-item-selected': 'ant-menu-item'}>
-                    <span>Product</span>
-                    <Link to="/product" />
+                <li key="/products"  className={location.pathname === '/products' ? 'ant-menu-item ant-menu-item-selected': 'ant-menu-item'}>
+                    <span>Products</span>
+                    <Link to="/products" />
                 </li>
             </ul>
         </Layout.Sider>

@@ -36,9 +36,9 @@ const NavBar = () => {
                         <span>Customer Feedback</span>
                         <Link to="/customer-feedback" />
                     </Menu.Item>
-                    <Menu.Item key="/product">
-                        <span>Product</span>
-                        <Link to="/product" />
+                    <Menu.Item key="/products">
+                        <span>Products</span>
+                        <Link to="/products" />
                     </Menu.Item>
                 </Menu>
             </Drawer>

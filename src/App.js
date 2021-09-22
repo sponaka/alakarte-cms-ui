@@ -10,6 +10,7 @@ import Customers from "./components/customers/Customers";
 import CustomerDetails from "./components/customers/customer-details/CustomerDetails";
 import CustomerFeedback from "./components/customer-feedback/CustomerFeedback";
 import Home from "./components/home/Home";
+import Products from "./components/products/Products";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                         <Route path="/customers" component={Customers} />
                         <Route path="/customer/:id" component={CustomerDetails} />
                         <Route path="/customer-feedback" component={CustomerFeedback} />
+                        <Route path="/products" component={Products} />
                     </Layout.Content>
                 </Layout>
             </Router>
