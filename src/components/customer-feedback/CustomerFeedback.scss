@@ -14,6 +14,7 @@
   justify-content: flex-start;
   align-items: flex-end;
   gap: 30px;
+  flex-wrap: wrap;
 
   .filter-name {
     color: #707070;
@@ -26,17 +27,18 @@
 
 .customer-feedback {
   margin-top: 25px;
-  display: flex;
-  justify-content: flex-start;
-  gap: 20px;
-  flex-wrap: wrap;
 }
 
 .feedback-card {
   background: #FFFFFF 0 0 no-repeat padding-box;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 11px;
-  width: 390px !important;
+  width: 390px;
+  height: 215px;
+
+  @media only screen and (max-width: 600px) {
+    width: 330px;
+  }
 
   .ant-card-body {
     padding: 15px;
@@ -100,4 +102,16 @@
 
 .ant-modal-body {
   padding: 18px;
+}
+
+.ant-row > div {
+
+  width: auto !important;
+  max-width: fit-content;
+}
+
+.ant-pagination {
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
 }
