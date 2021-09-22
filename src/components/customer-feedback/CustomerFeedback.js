@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import './CustomerFeedback.scss';
-import {Button, Card, Modal, Select, Spin} from "antd";
+import {Button, Card, List, Modal, Select, Spin} from "antd";
 import {Rate} from 'antd';
 import APIService from "../../api/service";
 import {Link} from "react-router-dom";
@@ -158,37 +158,45 @@ const CustomerFeedback = () => {
                 </div>
             </div>
             <div className='customer-feedback'>
-                {selectedCustomerFeedbackData.map(feedback => {
-                    return (
-                        <Card style={{width: 400}} className='feedback-card' key={feedback.feedbackId}>
-                            <div className='customer-name'>
-                                <Link to={{
-                                    pathname: `/customer/${feedback.customer_id}`
-                                }}
-                                >{feedback.customer_name}
-                                </Link>
-                            </div>
-                            <Rate allowHalf value={feedback.rating} className='rating' disabled/>
-                            <div className='order-details'>
-                                <h4 className='feedback-title'>Order Number</h4>
-                                <Link
-                                    to={{
-                                        pathname: `/orders`,
-                                        props: {
-                                            orderNoFilterSearch: feedback.order_no
-                                        }
+                <List
+                    grid={{
+                        gutter: 20,
+                    }}
+                    pagination={{
+                        pageSize: 5,
+                        hideOnSinglePage: true
+                    }}
+                    dataSource={selectedCustomerFeedbackData}
+                    renderItem={feedback => (
+                        <List.Item>
+                            <Card className='feedback-card' key={feedback.feedbackId}>
+                                <div className='customer-name'>
+                                    <Link to={{
+                                        pathname: `/customer/${feedback.customer_id}`
                                     }}
-                                >
-                                    <span className='order-no'>{feedback.order_no}</span>
-                                </Link>
-                                <h4 className='feedback-title'>Feedback</h4>
-                                <p className='remarks overflow-text' onClick={() =>
-                                    openFeedbackModal(feedback)
-                                }>{feedback.remarks}</p>
-                            </div>
-                        </Card>
-                    );
-                })}
+                                    >{feedback.customer_name}
+                                    </Link>
+                                </div>
+                                <Rate allowHalf value={feedback.rating} className='rating' disabled/>
+                                <div className='order-details'>
+                                    <h4 className='feedback-title'>Order Number</h4>
+                                    <Link
+                                        to={{
+                                            pathname: `/orders`,
+                                            props: {
+                                                orderNoFilterSearch: feedback.order_no
+                                            }
+                                        }}
+                                    >
+                                        <span className='order-no'>{feedback.order_no}</span>
+                                    </Link>
+                                    <h4 className='feedback-title'>Feedback</h4>
+                                    <p className='remarks overflow-text' onClick={() =>
+                                        openFeedbackModal(feedback)
+                                    }>{feedback.remarks}</p>
+                                </div>
+                            </Card>
+                        </List.Item>)}/>
 
             </div>
             <Modal visible={isModalVisible} footer={null} centered closeIcon={<CloseCircleOutlined/>}
