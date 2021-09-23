@@ -38,7 +38,7 @@ const Products = () => {
             <h1 className='page-title'>Products</h1>
             <div className='add-filter'>
                 <div className='product-name'>
-                    <div className='filter-name'>SEARCH BY ORDER STATUS</div>
+                    <div className='filter-name'>SEARCH BY PRODUCT</div>
                     <Select
                         allowClear
                         style={{width: 200}}
