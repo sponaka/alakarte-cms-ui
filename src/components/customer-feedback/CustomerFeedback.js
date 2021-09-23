@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import './CustomerFeedback.scss';
-import {Button, Card, List, Modal, Select, Spin} from "antd";
+import {Button, Card, DatePicker, List, Modal, Select, Spin} from "antd";
 import {Rate} from 'antd';
 import APIService from "../../api/service";
 import {Link} from "react-router-dom";
@@ -153,6 +153,10 @@ const CustomerFeedback = () => {
                                                                         value={customerName}>{customerName}</Option>)}
                     </Select>
                 </div>
+                <div className='order-date'>
+                    <div className='filter-name'>SEARCH BY ORDER DATE</div>
+                    <DatePicker style={{width: 200}} />
+                </div>
                 <div>
                     <Button onClick={resetFilters} className='ant-btn-default'>Reset filters</Button>
                 </div>
@@ -179,17 +183,25 @@ const CustomerFeedback = () => {
                                 </div>
                                 <Rate allowHalf value={feedback.rating} className='rating' disabled/>
                                 <div className='order-details'>
-                                    <h4 className='feedback-title'>Order Number</h4>
-                                    <Link
-                                        to={{
-                                            pathname: `/orders`,
-                                            props: {
-                                                orderNoFilterSearch: feedback.order_no
-                                            }
-                                        }}
-                                    >
-                                        <span className='order-no'>{feedback.order_no}</span>
-                                    </Link>
+                                    <div className='order-info'>
+                                    <div>
+                                        <h4 className='feedback-title'>Order Number</h4>
+                                        <Link
+                                            to={{
+                                                pathname: `/orders`,
+                                                props: {
+                                                    orderNoFilterSearch: feedback.order_no
+                                                }
+                                            }}
+                                        >
+                                            <span className='order-no'>{feedback.order_no}</span>
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <h4 className='feedback-title'>Ordered on</h4>
+                                        <span className='order-no'>{feedback.orderDate}</span>
+                                    </div>
+                                    </div>
                                     <h4 className='feedback-title'>Feedback</h4>
                                     <p className='remarks overflow-text' onClick={() =>
                                         openFeedbackModal(feedback)
