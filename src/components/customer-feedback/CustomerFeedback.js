@@ -18,6 +18,7 @@ const CustomerFeedback = () => {
     const [customerNameFilter, setCustomerNameFilter] = useState(null);
     const [orderNumberFilter, setOrderNumberFilter] = useState(null);
     const [ratingFilter, setRatingFilter] = useState(null);
+    const [orderDateFilter, setOrderDateFilter] = useState(null);
 
     const [customers, setCustomers] = useState([]);
     const [orderNumbers, setOrderNumbers] = useState([]);
@@ -28,6 +29,7 @@ const CustomerFeedback = () => {
 
     useEffect(() => {
         setLoading(true);
+        emptyFilters();
         APIService.getCustomersFeedback().then(response => {
             setCustomerFeedbackData(response);
             updateFilterOptions(response);
@@ -59,10 +61,15 @@ const CustomerFeedback = () => {
         return <div className='fetching'><Spin size="large"/></div>
     }
 
-    const resetFilters = () => {
+    const emptyFilters = () => {
         setRatingFilter(null);
         setCustomerNameFilter(null);
         setOrderNumberFilter(null);
+        setOrderDateFilter(null);
+    }
+
+    const resetFilters = () => {
+        emptyFilters();
         updateFilterOptions(customerFeedbackData);
     }
 
@@ -155,7 +162,29 @@ const CustomerFeedback = () => {
                 </div>
                 <div className='order-date'>
                     <div className='filter-name'>SEARCH BY ORDER DATE</div>
-                    <DatePicker style={{width: 200}} />
+                    <DatePicker style={{width: 200}}
+                                value={orderDateFilter}
+                                format="YYYY-MM-DD"
+                                onChange={(date, dateString) => {
+                                    setOrderDateFilter(date);
+                                    let filteredData;
+                                    if (date !== null) {
+                                        filteredData = customerFeedbackData.filter(order => order.orderDate === dateString);
+                                    } else {
+                                        filteredData = customerFeedbackData;
+                                    }
+                                    if (isNotNullAndNotUndefined(customerNameFilter)) {
+                                        filteredData = filteredData.filter(order => order.customer_name.includes(customerNameFilter));
+                                    }
+                                    if (isNotNullAndNotUndefined(orderNumberFilter)) {
+                                        filteredData = filteredData.filter(order => order.order_no === orderNumberFilter);
+                                    }
+                                    if (isNotNullAndNotUndefined(ratingFilter)) {
+                                        filteredData = filteredData.filter(feedback => feedback.rating === ratingFilter).sort();
+                                    }
+                                    updateFilterOptions(filteredData);
+                                }}
+                    />
                 </div>
                 <div>
                     <Button onClick={resetFilters} className='ant-btn-default'>Reset filters</Button>
@@ -170,6 +199,7 @@ const CustomerFeedback = () => {
                         pageSize: 5,
                         hideOnSinglePage: true
                     }}
+                    locale={{emptyText: <span>No feedbacks</span>}}
                     dataSource={selectedCustomerFeedbackData}
                     renderItem={feedback => (
                         <List.Item>
