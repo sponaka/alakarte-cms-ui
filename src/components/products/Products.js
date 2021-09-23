@@ -12,6 +12,7 @@ const Products = () => {
     const [productNameFilter, setProductNameFilter] = useState(null);
 
     const [allProducts, setAllProducts] = useState([]);
+    // eslint-disable-next-line
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [productTitles, setProductTitles] = useState([]);
 
@@ -24,7 +25,6 @@ const Products = () => {
             const productTitles = [...new Set(allProducts.map(product => product.title))];
             setProductTitles(productTitles);
             setFetchingProducts(false);
-
         })
             .catch((error) => console.error(error));
     }, []);
