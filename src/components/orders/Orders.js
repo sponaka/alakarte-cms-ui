@@ -151,6 +151,7 @@ const Orders = ({location}) => {
         setOrderStatusFilter(null);
         setCustomerNameFilter(null);
         setOrderNumberFilter(null);
+        setOrderDateRangeFilter([]);
         changeFilterOptions(ordersData);
     }
 
