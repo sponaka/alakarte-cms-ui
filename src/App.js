@@ -1,6 +1,6 @@
 import React from "react";
 import {Layout} from "antd";
-import {BrowserRouter as Router, Route} from "react-router-dom";
+import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom";
 
 import "./App.scss";
 import NavBar from "./components/navbar/Navbar";
@@ -21,12 +21,15 @@ function App() {
                 <Layout>
                     <SideBar />
                     <Layout.Content className="content" style={{background: '#F4F7FC 0% 0% no-repeat padding-box'}}>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/orders" component={Orders} />
-                        <Route path="/customers" component={Customers} />
-                        <Route path="/customer/:id" component={CustomerDetails} />
-                        <Route path="/customer-feedback" component={CustomerFeedback} />
-                        <Route path="/products" component={Products} />
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route path="/orders" component={Orders} />
+                            <Route path="/customers" component={Customers} />
+                            <Route path="/customer/:id" component={CustomerDetails} />
+                            <Route path="/customer-feedback" component={CustomerFeedback} />
+                            <Route path="/products" component={Products} />
+                            <Redirect from='*' to='/' />
+                        </Switch>
                     </Layout.Content>
                 </Layout>
             </Router>
