@@ -1,13 +1,28 @@
 import React, {useState} from "react";
-import {Avatar, Badge, Drawer, Menu} from "antd";
+import {Avatar, Badge, Drawer, Menu, Button} from "antd";
 import {BellOutlined, MenuOutlined} from "@ant-design/icons";
 import "./Navbar.scss";
 import logo from "./../../logo.svg";
 import {Link, useLocation} from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const NavBar = () => {
     const [visible, setVisible] = useState(false);
     const location = useLocation();
+    const {
+        user,
+        isAuthenticated,
+        loginWithRedirect,
+        logout,
+      } = useAuth0();
+
+    const logoutWithRedirect = () =>
+    logout({
+      returnTo: window.location.origin,
+    });
+ 
+
     return (
         <nav className="navbar ak-header">
             <div>
@@ -52,9 +67,48 @@ const NavBar = () => {
                         <BellOutlined style={{fontSize: '22px'}}/>
                     </Badge>
                 </div>
-                <Avatar style={{backgroundColor: '#0058FF'}}>JD</Avatar>
+                {/* <Avatar style={{backgroundColor: '#0058FF'}}>JD</Avatar>
                 &nbsp; &nbsp;
-                <span className='user-name'>Dileep Jami</span>
+                <span className='user-name'>Dileep Jami</span> */}
+               <div>
+
+                  {!isAuthenticated && (
+                
+                  <Button
+                    id="qsLoginBtn"
+                    color="primary"
+                    className="btn-margin"
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Log in
+                  </Button>
+                
+                 )}
+
+                {isAuthenticated && (
+                   <div> 
+
+                     <img
+                      src={user.picture}
+                      alt="Profile"
+                      className="nav-user-profile rounded-circle"
+                      width="50"
+                    />
+
+                    &nbsp;&nbsp;
+                     <Button
+                     id="qsLogoutBtn"
+                     onClick={() => logoutWithRedirect()}
+                   >
+                     Log out
+                   </Button>
+                   
+
+                    
+                  </div>  
+
+                )}
+              </div>  
             </div>
         </nav>
     );
